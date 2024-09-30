@@ -1,12 +1,10 @@
-"use client";
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Dialog, PopoverGroup, DialogPanel } from "@headlessui/react";
+import Link from "next/link";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white">
@@ -15,16 +13,11 @@ export default function Navbar() {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <h1 className="">
-              Athelete's Arena 2.0
-              <span className="sr-only">Athelete's Arena 2.0</span>
+              Athlete's Arena 2.0
+              <span className="sr-only">Athlete's Arena 2.0</span>
             </h1>
-            {/* <img
-              src="logo2.svg"
-              alt="Site Logo"
-              className="h-10 w-auto rounded-sm"
-            /> */}
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -37,9 +30,9 @@ export default function Navbar() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12">
           <Link
-            to="/search"
+            href="/search"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -57,7 +50,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            to="/account"
+            href="/account"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -71,7 +64,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            to="/cart"
+            href="/cart"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -83,7 +76,7 @@ export default function Navbar() {
               <path d="M1 1.75A.75.75 0 0 1 1.75 1h1.628a1.75 1.75 0 0 1 1.734 1.51L5.18 3a65.25 65.25 0 0 1 13.36 1.412.75.75 0 0 1 .58.875 48.645 48.645 0 0 1-1.618 6.2.75.75 0 0 1-.712.513H6a2.503 2.503 0 0 0-2.292 1.5H17.25a.75.75 0 0 1 0 1.5H2.76a.75.75 0 0 1-.748-.807 4.002 4.002 0 0 1 2.716-3.486L3.626 2.716a.25.25 0 0 0-.248-.216H1.75A.75.75 0 0 1 1 1.75ZM6 17.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
             </svg>
           </Link>
-        </PopoverGroup>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -96,13 +89,8 @@ export default function Navbar() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link to="/" className="-m-1.5 p-1.5">
+            <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Athlete's Arena 2.0</span>
-              {/* <img
-                src="logo2.svg"
-                alt="Athelete's Arena 2.0"
-                className="h-8 w-auto"
-              /> */}
             </Link>
             <button
               type="button"
@@ -117,7 +105,7 @@ export default function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <Link
-                  to="/search"
+                  href="/search"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -125,14 +113,14 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  to="/account"
+                  href="/account"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Account
                 </Link>
                 <Link
-                  to="/cart"
+                  href="/cart"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
