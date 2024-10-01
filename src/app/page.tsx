@@ -1,14 +1,15 @@
 "use client";
 
 import Navbar from "./components/navbar";
-import CreateProduct from "./components/createproduct";
+import Store from "./pages/store";
+import Cart from "./components/cart";
 import "./globals.css";
 
 function App() {
   return (
     <div>
       <Navbar />
-      <CreateProduct />
+      <Store />
     </div>
   );
 }

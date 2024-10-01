@@ -10,7 +10,7 @@ const itemData = [
   },
   {
     id: 2,
-    brand: "NBA",
+    brand: "Wilson",
     product: "Official NBA Basketball",
     price: 299.99,
     image: "/storeProducts/basketball2.png",

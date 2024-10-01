@@ -1,35 +1,20 @@
 import { useState, useEffect } from "react";
 import itemData from "../data/itemData";
+import Item from "../types/item";
+import CartItem from "../types/cartItem";
 
-interface Item {
-  id: number;
-  brand: string;
-  product: string;
-  price: number;
-  image: string;
-  alt: string;
-}
-
-interface CartItem {
-  id: number;
-  brand: string;
-  product: string;
-  price: number;
-  quantity: number;
-}
-
-export default function ProductList() {
+export default function Store() {
+  // Cart state management
   const [cart, setCart] = useState<CartItem[]>(() => {
-    // Get cart data from localStorage
     const savedCart = localStorage.getItem("data");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
   useEffect(() => {
-    // Save cart to localStorage whenever it changes
     localStorage.setItem("data", JSON.stringify(cart));
   }, [cart]);
 
+  // Function to add items to the cart
   const addToCart = (item: Item) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
     if (existingItem) {

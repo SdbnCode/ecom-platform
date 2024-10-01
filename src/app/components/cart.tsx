@@ -1,10 +1,35 @@
-import { useState } from "react";
-import Link from "next/link";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import CartItem from "../types/cartItem";
 
-export default function cart() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+interface CartDisplayProps {
+  cart: CartItem[];
+}
 
-  return <div></div>;
+export default function Cart({ cart }: CartDisplayProps) {
+  const cartTotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  return (
+    <div>
+      <h2>Your Cart</h2>
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <div>
+          {cart.map((item) => (
+            <div key={item.id}>
+              <h3>{item.product}</h3>
+              <p>{item.brand}</p>
+              <p>Quantity: {item.quantity}</p>
+              <p>Price: ${item.price} CAD</p>
+            </div>
+          ))}
+          <button> Remove </button>
+          <p>Total: ${cartTotal} CAD</p>
+          <button>Checkout</button>
+        </div>
+      )}
+    </div>
+  );
 }

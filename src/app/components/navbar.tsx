@@ -64,7 +64,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/cart"
+            href="/CartPage"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -120,7 +120,7 @@ export default function Navbar() {
                   Account
                 </Link>
                 <Link
-                  href="/cart"
+                  href="/cartPage"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
