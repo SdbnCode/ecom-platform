@@ -3,8 +3,8 @@ import itemData from "../data/itemData";
 
 interface Item {
   id: number;
-  name: string;
-  description: string;
+  brand: string;
+  product: string;
   price: number;
   image: string;
   alt: string;
@@ -12,7 +12,8 @@ interface Item {
 
 interface CartItem {
   id: number;
-  name: string;
+  brand: string;
+  product: string;
   price: number;
   quantity: number;
 }
@@ -42,20 +43,33 @@ export default function ProductList() {
     } else {
       setCart((prevCart) => [
         ...prevCart,
-        { id: item.id, name: item.name, price: item.price, quantity: 1 },
+        {
+          id: item.id,
+          brand: item.brand,
+          product: item.product,
+          price: item.price,
+          quantity: 1,
+        },
       ]);
     }
   };
 
   return (
-    <div id="product-section">
+    <div
+      id="product-section"
+      className="grid gap-4 justify-center lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
+    >
       {itemData.map((item: Item) => (
-        <div key={item.id} className="product-card">
-          <img src={item.image} alt={item.alt} />
+        <div
+          key={item.id}
+          id={`product-card-${item.id}`}
+          className="flex flex-col w-50 items-center justify-center p-4 rounded-lg "
+        >
+          <img src={item.image} alt={item.alt} className="w-auto h-48" />
           <div className="product-details">
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
-            <p>Price: ${item.price}</p>
+            <h2>{item.brand}</h2>
+            <p>{item.product}</p>
+            <p>${item.price} CAD</p>
           </div>
           <button onClick={() => addToCart(item)}>Add to Cart</button>
         </div>
