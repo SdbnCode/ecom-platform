@@ -57,13 +57,13 @@ export default function ProductList() {
   return (
     <div
       id="product-section"
-      className="grid gap-4 justify-center lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"
+      className="grid gap-4 justify-center lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 hover: "
     >
       {itemData.map((item: Item) => (
         <div
           key={item.id}
           id={`product-card-${item.id}`}
-          className="flex flex-col w-50 items-center justify-center p-4 rounded-lg "
+          className="flex flex-col w-50 items-center justify-center p-4 "
         >
           <img src={item.image} alt={item.alt} className="w-auto h-48" />
           <div className="product-details">
@@ -71,7 +71,12 @@ export default function ProductList() {
             <p>{item.product}</p>
             <p>${item.price} CAD</p>
           </div>
-          <button onClick={() => addToCart(item)}>Add to Cart</button>
+          <button
+            onClick={() => addToCart(item)}
+            className="bg-black text-white px-4 py-1 hover:bg-zinc-700"
+          >
+            Add to Cart
+          </button>
         </div>
       ))}
     </div>
