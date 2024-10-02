@@ -11,8 +11,8 @@ import CartItem from "../types/cartItem";
 interface ShoppingCartType {
   cart: CartItem[];
   addToCart: (item: Item) => void;
-  removeFromCart: (id: string) => void;
-  clearCart: () => void;
+  removeFromCart: (id: number) => void;
+  emptyCart: () => void;
 }
 
 interface ShoppingCartProviderProps {
@@ -67,7 +67,7 @@ export const ShoppingCartProvider = ({
     }
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: number) => {
     setCart((prevCart) => prevCart.filter((cartItem) => cartItem.id !== id));
   };
 
