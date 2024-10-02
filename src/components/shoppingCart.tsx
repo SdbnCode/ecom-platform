@@ -1,15 +1,16 @@
 "use client";
+
 import {
   createContext,
   useContext,
   useState,
   useEffect,
   ReactNode,
-  use,
 } from "react";
 import Item from "../types/item";
 import CartItem from "../types/cartItem";
 
+// Define the ShoppingCartType interface
 interface ShoppingCartType {
   cart: CartItem[];
   addToCart: (item: Item) => void;
@@ -17,12 +18,15 @@ interface ShoppingCartType {
   emptyCart: () => void;
 }
 
+// Define the props for the ShoppingCartProvider
 interface ShoppingCartProviderProps {
   children: ReactNode;
 }
 
+// Create the shopping cart context
 const ShoppingCart = createContext<ShoppingCartType | undefined>(undefined);
 
+// Export useShoppingCart as a named export
 export const useShoppingCart = () => {
   const context = useContext(ShoppingCart);
   if (!context) {
@@ -33,24 +37,23 @@ export const useShoppingCart = () => {
   return context;
 };
 
+// Export ShoppingCartProvider to wrap the app or components
 export const ShoppingCartProvider = ({
   children,
 }: ShoppingCartProviderProps) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
+  // Load the cart from localStorage when the component mounts
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedCart = localStorage.getItem("data");
-      if (savedCart) {
-        setCart(JSON.parse(savedCart));
-      }
+    const savedCart = localStorage.getItem("data");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
     }
   }, []);
 
+  // Save the cart to localStorage whenever the cart state changes
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("data", JSON.stringify(cart));
-    }
+    localStorage.setItem("data", JSON.stringify(cart));
   }, [cart]);
 
   const addToCart = (item: Item) => {

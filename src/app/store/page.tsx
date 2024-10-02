@@ -1,6 +1,6 @@
-import itemData from "../data/itemData";
-import Item from "../types/item";
-import { useShoppingCart } from "../components/shoppingCart";
+import itemData from "../../data/itemData";
+import Item from "../../types/item";
+import { useShoppingCart } from "../../components/shoppingCart";
 
 export default function Store() {
   const { addToCart } = useShoppingCart();

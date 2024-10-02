@@ -1,4 +1,4 @@
-import { ShoppingCartProvider } from "./components/shoppingCart";
+import { ShoppingCartProvider } from "../components/shoppingCart";
 import "./globals.css";
 
 export const metadata = {

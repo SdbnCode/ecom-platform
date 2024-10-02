@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 import { Dialog, DialogPanel } from "@headlessui/react";
@@ -64,7 +65,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/cartPage"
+            href="/cart"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -105,7 +106,7 @@ export default function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <Link
-                  href="/store"
+                  href="/search"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -113,14 +114,14 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="/store"
+                  href="/account"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Account
                 </Link>
                 <Link
-                  href="/cartPage"
+                  href="/cart"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
