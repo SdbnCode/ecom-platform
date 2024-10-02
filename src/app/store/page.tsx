@@ -1,3 +1,5 @@
+"use client";
+
 import itemData from "../../data/itemData";
 import Item from "../../types/item";
 import { useShoppingCart } from "../../components/shoppingCart";
