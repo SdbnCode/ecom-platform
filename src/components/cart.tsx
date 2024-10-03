@@ -7,7 +7,7 @@ interface CartDisplayProps {
 export default function Cart({ cart }: CartDisplayProps) {
   const cartTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
 
   return (

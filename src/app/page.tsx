@@ -2,9 +2,8 @@
 
 import Navbar from "../components/navbar";
 import Store from "./store/page";
-import { SessionProvider } from "next-auth/react";
-import CartPage from "./cart/page";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 function App() {
   return (

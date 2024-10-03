@@ -31,7 +31,7 @@ export const useShoppingCart = () => {
   const context = useContext(ShoppingCart);
   if (!context) {
     throw new Error(
-      "useShoppingCart must be used within a ShoppingCartProvider"
+      "useShoppingCart must be used within a ShoppingCartProvider",
     );
   }
   return context;
@@ -63,8 +63,8 @@ export const ShoppingCartProvider = ({
         prevCart.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
+            : cartItem,
+        ),
       );
     } else {
       setCart((prevCart) => [
