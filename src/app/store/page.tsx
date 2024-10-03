@@ -23,10 +23,7 @@ export default function Store() {
             <p>{item.product}</p>
             <p>${item.price} CAD</p>
           </div>
-          <button
-            onClick={() => addToCart(item)}
-            className="bg-black px-4 py-1 text-white hover:bg-zinc-700"
-          >
+          <button onClick={() => addToCart(item)} className="btn btn-wide">
             Add to Cart
           </button>
         </div>

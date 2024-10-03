@@ -19,15 +19,16 @@ export default function Cart({ cart }: CartDisplayProps) {
         <div>
           {cart.map((item) => (
             <div key={item.id}>
+              <img src={item.image} alt={item.alt} className="h-48 w-auto" />
               <h3>{item.product}</h3>
               <p>{item.brand}</p>
               <p>Quantity: {item.quantity}</p>
               <p>Price: ${item.price} CAD</p>
             </div>
           ))}
-          <button> Remove </button>
+          <button className="btn"> Remove </button>
           <p>Total: ${cartTotal} CAD</p>
-          <button>Checkout</button>
+          <button className="btn">Checkout</button>
         </div>
       )}
     </div>
