@@ -75,6 +75,7 @@ export const ShoppingCartProvider = ({
           product: item.product,
           price: item.price,
           quantity: 1,
+          image: item.image,
         },
       ]);
     }
