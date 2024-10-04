@@ -23,7 +23,7 @@ export default function Store() {
             alt={item.alt}
             width={192}
             height={192}
-            className="h-48 w-auto"
+            className="h-auto w-auto"
           />
           <div className="product-details">
             <h2>{item.brand}</h2>

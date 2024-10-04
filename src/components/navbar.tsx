@@ -11,11 +11,11 @@ export default function Navbar() {
     <header className="bg-white">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="prose mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <h1 className="">
+          <Link href="/" className="-m-1.5 p-1.5 no-underline">
+            <h1>
               Athlete&apos;s Arena 2.0
               <span className="sr-only">Athlete&apos;s Arena 2.0</span>
             </h1>
@@ -33,7 +33,7 @@ export default function Navbar() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <Link
-            href="/store"
+            href="/search"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
@@ -51,7 +51,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/store"
+            href="/login"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             <svg
