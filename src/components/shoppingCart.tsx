@@ -73,6 +73,7 @@ export const ShoppingCartProvider = ({
           id: item.id,
           brand: item.brand,
           product: item.product,
+          alt: item.alt,
           price: item.price,
           quantity: 1,
           image: item.image,

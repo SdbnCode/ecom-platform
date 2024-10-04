@@ -2,6 +2,7 @@
 import itemData from "../../data/itemData";
 import Item from "../../types/item";
 import { useShoppingCart } from "../../components/shoppingCart";
+import Image from "next/image";
 
 export default function Store() {
   const { addToCart } = useShoppingCart();
@@ -17,13 +18,22 @@ export default function Store() {
           id={`product-card-${item.id}`}
           className="w-50 flex flex-col items-center justify-center p-4"
         >
-          <img src={item.image} alt={item.alt} className="h-48 w-auto" />
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={192}
+            height={192}
+            className="h-48 w-auto"
+          />
           <div className="product-details">
             <h2>{item.brand}</h2>
             <p>{item.product}</p>
             <p>${item.price} CAD</p>
           </div>
-          <button onClick={() => addToCart(item)} className="btn btn-wide">
+          <button
+            onClick={() => addToCart(item)}
+            className="btn btn-primary btn-wide"
+          >
             Add to Cart
           </button>
         </div>

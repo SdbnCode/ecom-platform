@@ -1,4 +1,5 @@
 import CartItem from "../types/cartItem";
+import Image from "next/image";
 
 interface CartDisplayProps {
   cart: CartItem[];
@@ -19,7 +20,13 @@ export default function Cart({ cart }: CartDisplayProps) {
         <div>
           {cart.map((item) => (
             <div key={item.id}>
-              <img src={item.image} alt={item.alt} className="h-48 w-auto" />
+              <Image
+                src={item.image}
+                alt={item.alt}
+                width={192}
+                height={192}
+                className="h-48 w-auto"
+              />
               <h3>{item.product}</h3>
               <p>{item.brand}</p>
               <p>Quantity: {item.quantity}</p>
