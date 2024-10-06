@@ -1,17 +1,26 @@
-import { PrismaClient } from "@prisma/client/extension";
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
+import * as z from "zod";
+import Prisma from "../../lib/prisma";
 
-const Prisma = new PrismaClient();
+//User validation schema
+const UserSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Invalid email"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must have more than 8 characters"),
+  address: z.string().optional(),
+});
 
 export async function POST(req: Request) {
   try {
     const user = await req.json();
-    const { Email, Password, Address } = user;
+    const { email, password, address } = UserSchema.parse(user);
 
     const emailExists = await Prisma.user.findUnique({
       where: {
-        Email: Email,
+        email: email,
       },
     });
     if (emailExists) {
@@ -21,16 +30,20 @@ export async function POST(req: Request) {
       );
     }
 
-    const passwordHash = await hash(Password, 10);
+    const passwordHash = await hash(password, 10);
     const newUser = await Prisma.user.create({
       data: {
-        Email,
-        Password: passwordHash,
-        Address: Address ? Address : null,
+        email,
+        password: passwordHash,
+        address: address ? address : null,
       },
     });
+
+    // Don't send the hashed password back to the client
+    const { password: hashedPassword, ...rest } = newUser;
+
     return NextResponse.json(
-      { user: newUser, message: "Account successfully created!" },
+      { user: rest, message: "Account successfully created!" },
       { status: 201 },
     );
   } catch (error) {
