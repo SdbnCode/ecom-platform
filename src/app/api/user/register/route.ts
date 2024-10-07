@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import * as z from "zod";
-import Prisma from "../../lib/prisma";
+import Prisma from "../../../lib/prisma";
 
 //User validation schema
 const UserSchema = z.object({
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
     });
 
     // Don't send the hashed password back to the client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: hashedPassword, ...rest } = newUser;
 
     return NextResponse.json(
