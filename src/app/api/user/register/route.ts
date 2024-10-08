@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     const user = await req.json();
     const { email, password, address } = UserSchema.parse(user);
 
+    // Check if the email already exists in the database
     const emailExists = await Prisma.user.findUnique({
       where: {
         email: email,
@@ -30,7 +31,10 @@ export async function POST(req: Request) {
       );
     }
 
+    // Hash the password before storing it in the database
     const passwordHash = await hash(password, 10);
+
+    // Create a new user in the database
     const newUser = await Prisma.user.create({
       data: {
         email,

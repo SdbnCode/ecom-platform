@@ -24,7 +24,7 @@ const FormSchema = z
   });
 
 export default function RegisterPage() {
-  const router = useRouter(); // Move useRouter here
+  const router = useRouter();
 
   const {
     register,
@@ -54,7 +54,7 @@ export default function RegisterPage() {
     });
 
     if (response.ok) {
-      router.push("/account"); // Use router.push here
+      router.push("/login");
     } else {
       console.error("User registration failed");
     }
@@ -83,7 +83,9 @@ export default function RegisterPage() {
               {...register("email")}
             />
           </label>
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-500">{errors.email.message}</p>
+          )}
 
           <label className="input input-bordered flex items-center gap-2">
             <svg
@@ -105,7 +107,9 @@ export default function RegisterPage() {
               {...register("password")}
             />
           </label>
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-red-500">{errors.password.message}</p>
+          )}
 
           <label className="input input-bordered flex items-center gap-2">
             <svg
@@ -127,7 +131,9 @@ export default function RegisterPage() {
               {...register("confirmPassword")}
             />
           </label>
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && (
+            <p className="text-red-500">{errors.confirmPassword.message}</p>
+          )}
 
           <label className="input input-bordered flex items-center gap-2">
             <svg
@@ -147,7 +153,9 @@ export default function RegisterPage() {
               {...register("address")}
             />
           </label>
-          {errors.address && <p>{errors.address.message}</p>}
+          {errors.address && (
+            <p className="text-red-500">{errors.address.message}</p>
+          )}
 
           <button className="btn btn-primary btn-wide" type="submit">
             Register
