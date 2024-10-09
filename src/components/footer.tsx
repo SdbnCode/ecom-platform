@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="footer bg-base-200 p-10 text-base-content">
+    <footer className="text footer bg-white p-10">
       <nav>
         <h6 className="footer-title">Services</h6>
         <a className="link-hover link">Branding</a>
@@ -31,7 +31,7 @@ export default function Footer() {
             <input
               type="text"
               placeholder="username@site.com"
-              className="input join-item input-bordered"
+              className="input join-item input-bordered bg-inherit"
             />
             <button className="btn btn-primary join-item">Subscribe</button>
           </div>

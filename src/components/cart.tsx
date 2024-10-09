@@ -10,8 +10,8 @@ export default function Cart() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center py-10">
-      <div className="w-full max-w-4xl rounded-md bg-white p-6 shadow-md">
+    <div className="flex h-screen flex-col items-center justify-center bg-white py-10">
+      <div className="w-full max-w-4xl rounded-md bg-white p-6">
         <h1 className="mb-6 text-center text-3xl font-bold">Your Cart</h1>
         {cart.length === 0 ? (
           <p className="text-center text-lg text-gray-600">
@@ -73,7 +73,7 @@ export default function Cart() {
               <p className="text-sm text-gray-500">
                 Shipping, taxes, and discounts are calculated at checkout.
               </p>
-              <button className="btn btn-primary mt-4 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700">
+              <button className="btn btn-primary mt-4 rounded-md px-6 py-2 text-white">
                 Checkout
               </button>
             </div>

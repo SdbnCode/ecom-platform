@@ -10,7 +10,7 @@ export default function Store() {
   return (
     <div
       id="product-section"
-      className="hover: grid justify-center gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+      className="grid justify-center gap-4 bg-white sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
     >
       {itemData.map((item: Item) => (
         <div
