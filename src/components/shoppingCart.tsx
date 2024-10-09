@@ -16,6 +16,7 @@ interface ShoppingCartType {
   addToCart: (item: Item) => void;
   removeFromCart: (id: number) => void;
   emptyCart: () => void;
+  updateQuantity: (id: number, quantity: number) => void;
 }
 
 // Define the props for the ShoppingCartProvider
@@ -90,9 +91,19 @@ export const ShoppingCartProvider = ({
     setCart([]);
   };
 
+  const updateQuantity = (id: number, quantity: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: quantity > 0 ? quantity : 1 }
+          : item,
+      ),
+    );
+  };
+
   return (
     <ShoppingCart.Provider
-      value={{ cart, addToCart, removeFromCart, emptyCart }}
+      value={{ cart, addToCart, removeFromCart, emptyCart, updateQuantity }}
     >
       {children}
     </ShoppingCart.Provider>
