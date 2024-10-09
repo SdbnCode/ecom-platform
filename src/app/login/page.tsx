@@ -74,7 +74,7 @@ export default function LoginPage() {
               />
             </div>
             {errors.email && (
-              <p className="mt-1 to-red-600 text-sm text-error">
+              <p className="mb-0 mt-1 text-sm text-error">
                 {errors.email.message}
               </p>
             )}
@@ -101,7 +101,7 @@ export default function LoginPage() {
               />
             </div>
             {errors.password && (
-              <p className="mt-1 text-sm text-error">
+              <p className="mb-0 mt-1 text-sm text-error">
                 {errors.password.message}
               </p>
             )}
