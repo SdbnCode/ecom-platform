@@ -9,15 +9,7 @@ import {
 } from "react";
 import Item from "../types/item";
 import CartItem from "../types/cartItem";
-
-// Define the ShoppingCartType interface
-interface ShoppingCartType {
-  cart: CartItem[];
-  addToCart: (item: Item) => void;
-  removeFromCart: (id: number) => void;
-  emptyCart: () => void;
-  updateQuantity: (id: number, quantity: number) => void;
-}
+import ShoppingCartType from "../types/shoppingCartType";
 
 // Define the props for the ShoppingCartProvider
 interface ShoppingCartProviderProps {

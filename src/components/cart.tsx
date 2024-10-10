@@ -10,7 +10,7 @@ export default function Cart() {
   );
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-white py-10">
+    <div className="flex h-max flex-col items-center justify-center bg-white py-10">
       <div className="w-full max-w-4xl rounded-md bg-white p-6">
         <h1 className="mb-6 text-center text-3xl font-bold">Your Cart</h1>
         {cart.length === 0 ? (
