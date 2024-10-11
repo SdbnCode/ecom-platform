@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useState } from "react";
 
 // Define the form validation schema
 const FormSchema = z
@@ -26,6 +27,9 @@ const FormSchema = z
 export default function RegisterPage() {
   const router = useRouter();
 
+  // Define the server error state
+  const [serverError, setServerError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -41,22 +45,28 @@ export default function RegisterPage() {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-        address: values.address,
-      }),
-    });
+    try {
+      const response = await fetch("/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          address: values.address,
+        }),
+      });
 
-    if (response.ok) {
-      router.push("/login");
-    } else {
-      console.error("User registration failed");
+      if (response.ok) {
+        router.push("/login");
+      } else {
+        const data = await response.json();
+        setServerError(data.message);
+      }
+    } catch (error) {
+      setServerError("An unexpected error occurred. Please try again later.");
+      console.error(error);
     }
   };
 
@@ -65,6 +75,9 @@ export default function RegisterPage() {
       <div className="prose w-full max-w-md gap-2 rounded-lg bg-white p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <h2 className="text-center">Register</h2>
+          {serverError && (
+            <p className="mb-0 mt-1 text-sm text-error">{serverError}</p>
+          )}
           <div className="form-control">
             <div className="relative">
               <svg
@@ -80,6 +93,7 @@ export default function RegisterPage() {
                 type="text"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Email"
+                required
                 {...register("email")}
               />
             </div>
@@ -107,6 +121,7 @@ export default function RegisterPage() {
                 type="password"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Password"
+                required
                 {...register("password")}
               />
             </div>
@@ -134,6 +149,7 @@ export default function RegisterPage() {
                 type="password"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Confirm Password"
+                required
                 {...register("confirmPassword")}
               />
             </div>

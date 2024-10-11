@@ -26,7 +26,10 @@ export async function POST(req: Request) {
     });
     if (emailExists) {
       return NextResponse.json(
-        { user: null, message: "Email already in use" },
+        {
+          user: null,
+          message: "This email address is already associated with an account.",
+        },
         { status: 409 },
       );
     }
