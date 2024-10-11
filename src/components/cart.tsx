@@ -73,7 +73,10 @@ export default function Cart() {
               <p className="text-sm text-gray-500">
                 Shipping, taxes, and discounts are calculated at checkout.
               </p>
-              <button className="btn btn-primary mt-4 rounded-md px-6 py-2 text-white">
+              <button
+                className="btn btn-primary mt-4 rounded-md px-6 py-2 text-white"
+                type="submit"
+              >
                 Checkout
               </button>
             </div>

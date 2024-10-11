@@ -35,19 +35,21 @@ export const ShoppingCartProvider = ({
   children,
 }: ShoppingCartProviderProps) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Load the cart from localStorage when the component mounts
   useEffect(() => {
+    setIsMounted(true);
     const savedCart = localStorage.getItem("data");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
   }, []);
 
-  // Save the cart to localStorage whenever the cart state changes
   useEffect(() => {
-    localStorage.setItem("data", JSON.stringify(cart));
-  }, [cart]);
+    if (isMounted) {
+      localStorage.setItem("data", JSON.stringify(cart));
+    }
+  }, [cart, isMounted]);
 
   const addToCart = (item: Item) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
