@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import * as z from "zod";
-import Prisma from "../../../lib/prisma";
+import Prisma from "../../../../lib/prisma";
 
 //User validation schema
 const UserSchema = z.object({
