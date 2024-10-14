@@ -1,4 +1,4 @@
-interface Item {
+interface product {
   id: number;
   brand: string;
   product: string;
@@ -7,4 +7,4 @@ interface Item {
   alt: string;
 }
 
-export default Item;
+export default product;

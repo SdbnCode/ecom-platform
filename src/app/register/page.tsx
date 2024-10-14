@@ -26,8 +26,6 @@ const FormSchema = z
 
 export default function RegisterPage() {
   const router = useRouter();
-
-  // Define the server error state
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
