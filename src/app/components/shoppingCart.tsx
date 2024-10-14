@@ -7,9 +7,9 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import Item from "../types/item";
-import CartItem from "../types/cartItem";
-import ShoppingCartType from "../types/shoppingCartType";
+import Item from "../(user)/types/item";
+import CartItem from "../(user)/types/cartItem";
+import ShoppingCartType from "../(user)/types/shoppingCartType";
 
 // Define the props for the ShoppingCartProvider
 interface ShoppingCartProviderProps {

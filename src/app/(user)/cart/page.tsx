@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useShoppingCart } from "../../components/shoppingCart";
 
-export default function Cart() {
+export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useShoppingCart();
 
   const cartTotal = cart.reduce(

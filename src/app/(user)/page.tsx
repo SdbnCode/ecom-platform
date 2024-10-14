@@ -1,10 +1,11 @@
 "use client";
-import itemData from "../../data/itemData";
-import Item from "../../types/item";
-import { useShoppingCart } from "../../components/shoppingCart";
+import itemData from "../data/itemData";
+import Item from "./types/item";
+import { useShoppingCart } from "../components/shoppingCart";
 import Image from "next/image";
+import "../globals.css";
 
-export default function Store() {
+export default function HomePage() {
   const { addToCart } = useShoppingCart();
 
   return (
