@@ -1,4 +1,4 @@
-import Navbar from "@/app/components/navbar";
+import Navbar from "@/app/components/nav";
 import { ShoppingCartProvider } from "../components/shoppingCart";
 import "../globals.css";
 import Footer from "@/app/components/footer";

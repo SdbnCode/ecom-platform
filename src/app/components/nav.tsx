@@ -13,24 +13,27 @@ export default function Navbar() {
         aria-label="Global"
         className="prose mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 no-underline">
-            <h1>
-              Athlete&apos;s Arena 2.0
-              <span className="sr-only">Athlete&apos;s Arena 2.0</span>
+        <div className="flex w-full items-center justify-between lg:w-auto">
+          <Link href="/" className="p-4 no-underline">
+            <h1 className="m-0 text-2xl font-bold">
+              Athlete&apos;s Arena
+              <span className="sr-only">Athlete&apos;s Arena</span>
             </h1>
           </Link>
+
+          <div className="lg:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="ml-4 inline-flex items-center justify-center rounded-md px-3 py-2 text-gray-700"
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+            </button>
+          </div>
         </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
-        </div>
+
+        {/* Desktop Menu */}
         <div className="hidden lg:flex lg:gap-x-12">
           <Link
             href="/search"
@@ -102,33 +105,30 @@ export default function Navbar() {
               <XMarkIcon aria-hidden="true" className="h-6 w-6" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <Link
-                  href="/search"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Search
-                </Link>
 
-                <Link
-                  href="/account"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Account
-                </Link>
-                <Link
-                  href="/cart"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Cart
-                </Link>
-              </div>
-            </div>
+          {/* Mobile Menu Items */}
+          <div className="mt-6 flex flex-col items-center gap-6">
+            <Link
+              href="/search"
+              className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Search
+            </Link>
+            <Link
+              href="/account"
+              className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Account
+            </Link>
+            <Link
+              href="/cart"
+              className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Cart
+            </Link>
           </div>
         </DialogPanel>
       </Dialog>
