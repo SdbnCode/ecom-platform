@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
     <header className="bg-white">
@@ -33,24 +34,35 @@ export default function Navbar() {
         aria-label="Global"
         className="hidden flex-row justify-center gap-10 lg:flex"
       >
-        <Link
-          href="/admin/Dashboard"
-          className="font-semibold text-gray-900 no-underline"
-        >
-          Dashboard
-        </Link>
-        <Link
-          href="/Products"
-          className="font-semibold text-gray-900 no-underline"
-        >
-          Products
-        </Link>
-        <Link
-          href="/admin/Orders"
-          className="font-semibold text-gray-900 no-underline"
-        >
-          Orders
-        </Link>
+        <div className="tab tabs-lifted tabs-lg rounded-box text-lg font-bold">
+          <a
+            role="tab"
+            className={`tab ${activeTab === "dashboard" ? "tab-active [--tab-bg:white]" : ""}`}
+            onClick={() => setActiveTab("dashboard")}
+          >
+            <Link href="/admin/" className="">
+              Dashboard
+            </Link>
+          </a>
+          <a
+            role="tab"
+            className={`tab ${activeTab === "products" ? "tab-active [--tab-bg:white]" : ""}`}
+            onClick={() => setActiveTab("products")}
+          >
+            <Link href="/Products" className="">
+              Products
+            </Link>
+          </a>
+          <a
+            role="tab"
+            className={`tab ${activeTab === "orders" ? "tab-active [--tab-bg:white]" : ""}`}
+            onClick={() => setActiveTab("orders")}
+          >
+            <Link href="/admin/Orders" className="">
+              Orders
+            </Link>
+          </a>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
@@ -88,21 +100,30 @@ export default function Navbar() {
             <Link
               href="/admin/Dashboard"
               className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setActiveTab("dashboard");
+                setMobileMenuOpen(false);
+              }}
             >
               Dashboard
             </Link>
             <Link
               href="/Products"
               className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setActiveTab("products");
+                setMobileMenuOpen(false);
+              }}
             >
               Products
             </Link>
             <Link
               href="/admin/Orders"
               className="block px-3 py-2 text-base font-semibold text-gray-900 no-underline hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setActiveTab("orders");
+                setMobileMenuOpen(false);
+              }}
             >
               Orders
             </Link>
