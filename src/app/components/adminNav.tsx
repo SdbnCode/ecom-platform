@@ -6,7 +6,15 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState(() => {
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      if (path.includes("/admin/products")) return "products";
+      if (path.includes("/admin/orders")) return "orders";
+      return "dashboard";
+    }
+    return "dashboard";
+  });
 
   return (
     <header className="bg-white pb-6 shadow-lg">
@@ -49,7 +57,7 @@ export default function Navbar() {
             className={`tab ${activeTab === "products" ? "tab-active bg-black text-white" : "text-black hover:text-slate-700"} rounded-lg font-semibold`}
             onClick={() => setActiveTab("products")}
           >
-            <Link href="/Products" className="no-underline">
+            <Link href="/admin/products" className="no-underline">
               Products
             </Link>
           </a>
@@ -58,7 +66,7 @@ export default function Navbar() {
             className={`tab ${activeTab === "orders" ? "tab-active bg-black text-white" : "text-gray-700 hover:text-slate-700"} rounded-lg font-semibold`}
             onClick={() => setActiveTab("orders")}
           >
-            <Link href="/admin/Orders" className="no-underline">
+            <Link href="/admin/orders" className="no-underline">
               Orders
             </Link>
           </a>
@@ -100,8 +108,8 @@ export default function Navbar() {
               href="/admin/Dashboard"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "dashboard"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-900 hover:bg-gray-100"
+                  ? "bg-black text-white"
+                  : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
                 setActiveTab("dashboard");
@@ -111,11 +119,11 @@ export default function Navbar() {
               Dashboard
             </Link>
             <Link
-              href="/Products"
+              href="/admin/products"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "products"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-900 hover:bg-gray-100"
+                  ? "bg-black text-white"
+                  : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
                 setActiveTab("products");
@@ -125,11 +133,11 @@ export default function Navbar() {
               Products
             </Link>
             <Link
-              href="/admin/Orders"
+              href="/admin/orders"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "orders"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-900 hover:bg-gray-100"
+                  ? "bg-black text-white"
+                  : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
                 setActiveTab("orders");
