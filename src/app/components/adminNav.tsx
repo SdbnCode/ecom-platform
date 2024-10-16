@@ -1,20 +1,24 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(() => {
-    if (typeof window !== "undefined") {
-      const path = window.location.pathname;
-      if (path.includes("/admin/products")) return "products";
-      if (path.includes("/admin/orders")) return "orders";
-      return "dashboard";
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  // Update the active tab based on the current URL path
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.includes("/admin/products")) {
+      setActiveTab("products");
+    } else if (path.includes("/admin/orders")) {
+      setActiveTab("orders");
+    } else {
+      setActiveTab("dashboard");
     }
-    return "dashboard";
-  });
+  }, []);
 
   return (
     <header className="bg-white pb-6 shadow-lg">

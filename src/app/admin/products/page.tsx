@@ -1,9 +1,15 @@
+"use client";
 export default function ProductPage() {
   return (
     <div className="prose mt-4 max-w-none overflow-x-auto">
       <div className="flex justify-evenly">
         <h1 className="mb-0">Products</h1>
-        <button className="btn btn-primary btn-sm">Add Product </button>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => (window.location.href = "/admin/products/new")}
+        >
+          Add Product
+        </button>
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full border-collapse">
