@@ -4,6 +4,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
@@ -19,11 +31,7 @@ export default function AddProduct() {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<z.infer<typeof productSchema>>({
+  const form = useForm<z.infer<typeof productSchema>>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
@@ -65,86 +73,93 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="prose mt-4 flex max-w-none justify-center">
-      <form
-        className="form-control w-full max-w-md gap-4"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h1>Add Product</h1>
+    <div className="my-8 flex justify-center">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <h1 className="text-lg font-bold">Add Product</h1>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Product Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter product name" {...field} />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.name?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Product Name:</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Enter product name"
-            className="input input-bordered input-primary w-full"
-            {...register("name")}
-            required
-          />
-        </div>
-        {errors.name && (
-          <p className="mb-0 mt-1 text-sm text-error">{errors.name.message}</p>
-        )}
+              <FormField
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0.00"
+                        step="0.01"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.price?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Price:</span>
-          </label>
-          <input
-            type="number"
-            placeholder="0.00"
-            step="0.01"
-            className="input input-bordered input-primary w-full pl-8"
-            min="0"
-            required
-            {...register("price")}
-          />
-        </div>
-        {errors.price && (
-          <p className="mb-0 mt-1 text-sm text-error">{errors.price.message}</p>
-        )}
+              <FormField
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter product description"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.description?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Description:</span>
-          </label>
-          <textarea
-            placeholder="Enter product description"
-            className="textarea textarea-bordered textarea-primary w-full"
-            rows={4}
-            required
-            {...register("description")}
-          ></textarea>
-        </div>
-        {errors.description && (
-          <p className="mb-0 mt-1 text-sm text-error">
-            {errors.description.message}
-          </p>
-        )}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Product Image:</span>
-          </label>
-          <input
-            type="file"
-            className="file-input file-input-bordered file-input-primary w-full"
-            accept="image/*"
-            required
-            {...register("image")}
-          />
-        </div>
-        {errors.image && (
-          <p className="mb-0 mt-1 text-sm text-error">{errors.image.message}</p>
-        )}
-        {serverError && (
-          <p className="mb-0 mt-1 text-sm text-error">{serverError}</p>
-        )}
-        <button type="submit" className="btn btn-primary btn-md mt-4 w-full">
-          Add Product
-        </button>
-      </form>
+              <FormField
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Product Image</FormLabel>
+                    <FormControl>
+                      <Input type="file" accept="image/*" {...field} />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.image?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+
+              {serverError && (
+                <p className="mb-0 mt-1 text-sm text-red-500">{serverError}</p>
+              )}
+
+              <Button type="submit" className="w-full">
+                Add Product
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 }
