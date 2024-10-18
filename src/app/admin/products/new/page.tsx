@@ -19,7 +19,9 @@ import {
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
-  price: z.number().min(0, "Price must be more than 0"),
+  price: z
+    .number({ invalid_type_error: "Price must be a number" })
+    .min(0, "Price must be more than 0"),
   description: z.string().min(1, "Description is required"),
   category: z.string().min(1, "Category is required"),
   image: z
@@ -35,7 +37,7 @@ export default function AddProduct() {
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
-      price: 0,
+      price: undefined,
       description: "",
       category: "",
       image: undefined,
@@ -68,7 +70,6 @@ export default function AddProduct() {
       }
     } catch (error) {
       setServerError("An unexpected error occurred. Please try again later.");
-      console.error(error);
     }
   };
 
@@ -125,6 +126,7 @@ export default function AddProduct() {
                       <Textarea
                         placeholder="Enter product description"
                         {...field}
+                        rows={4}
                       />
                     </FormControl>
                     <FormMessage>
@@ -150,7 +152,7 @@ export default function AddProduct() {
               />
 
               {serverError && (
-                <p className="mb-0 mt-1 text-sm text-red-500">{serverError}</p>
+                <p className="text-error mb-0 mt-1 text-sm">{serverError}</p>
               )}
 
               <Button type="submit" className="w-full">
