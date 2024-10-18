@@ -8,7 +8,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
 
-  // Update the active tab based on the current URL path
+  // To update the active tab based on the current URL path
   useEffect(() => {
     const path = window.location.pathname;
     if (path.includes("/admin/products")) {
@@ -49,7 +49,7 @@ export default function Navbar() {
         <div className="flex gap-6">
           <a
             role="tab"
-            className={`tab ${activeTab === "dashboard" ? "tab-active bg-black text-white" : "text-black hover:text-slate-800"} rounded-lg font-semibold`}
+            className={`tab ${activeTab === "dashboard" ? "tab-active bg-black text-white shadow-lg" : "text-black hover:text-slate-800"} rounded-lg px-4 py-2 font-semibold`}
             onClick={() => setActiveTab("dashboard")}
           >
             <Link href="/admin/" className="no-underline">
@@ -58,7 +58,7 @@ export default function Navbar() {
           </a>
           <a
             role="tab"
-            className={`tab ${activeTab === "products" ? "tab-active bg-black text-white" : "text-black hover:text-slate-700"} rounded-lg font-semibold`}
+            className={`tab ${activeTab === "products" ? "tab-active bg-black text-white shadow-lg" : "text-black hover:text-slate-700"} rounded-lg px-4 py-2 font-semibold`}
             onClick={() => setActiveTab("products")}
           >
             <Link href="/admin/products" className="no-underline">
@@ -67,7 +67,7 @@ export default function Navbar() {
           </a>
           <a
             role="tab"
-            className={`tab ${activeTab === "orders" ? "tab-active bg-black text-white" : "text-gray-700 hover:text-slate-700"} rounded-lg font-semibold`}
+            className={`tab ${activeTab === "orders" ? "tab-active bg-black text-white shadow-lg" : "text-gray-700 hover:text-slate-700"} rounded-lg px-4 py-2 font-semibold`}
             onClick={() => setActiveTab("orders")}
           >
             <Link href="/admin/orders" className="no-underline">
@@ -112,7 +112,7 @@ export default function Navbar() {
               href="/admin/Dashboard"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "dashboard"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white shadow-lg"
                   : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
@@ -126,7 +126,7 @@ export default function Navbar() {
               href="/admin/products"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "products"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white shadow-lg"
                   : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
@@ -140,7 +140,7 @@ export default function Navbar() {
               href="/admin/orders"
               className={`block rounded-lg px-4 py-3 text-lg font-semibold ${
                 activeTab === "orders"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white shadow-lg"
                   : "text-gray-900 hover:bg-gray-400"
               }`}
               onClick={() => {
