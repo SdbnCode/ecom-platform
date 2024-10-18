@@ -1,5 +1,10 @@
 import prisma from "@/lib/prisma";
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
 interface dashboardStatsProps {
   title: string;
   value: string | number;
@@ -8,11 +13,11 @@ interface dashboardStatsProps {
 
 function DashboardStats({ title, value, description }: dashboardStatsProps) {
   return (
-    <div className="stat">
-      <div className="stat-title">{title}</div>
-      <div className="stat-value">{value}</div>
-      <div className="stat-desc">{description}</div>
-    </div>
+    <Card className="w-64 p-4 text-center">
+      <CardHeader className="text-3xl font-bold">{title}</CardHeader>
+      <CardContent className="text-3xl font-semibold">{value}</CardContent>
+      <CardDescription className="text-lg">{description}</CardDescription>
+    </Card>
   );
 }
 
@@ -35,15 +40,18 @@ export default async function AdminPage() {
 
   return (
     <div className="mt-10 flex justify-center">
-      <div className="stats stats-vertical shadow lg:stats-horizontal">
+      <div className="flex shadow">
         <DashboardStats
           title="Sales"
-          value={orders}
+          value={Intl.NumberFormat("en-CA").format(orders)}
           description="Total sales"
         />
         <DashboardStats
           title="Revenue"
-          value={Intl.NumberFormat("en-CA").format(revenue)}
+          value={Intl.NumberFormat("en-CA", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(revenue)}
           description="Total revenue"
         />
       </div>
