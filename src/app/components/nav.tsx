@@ -3,16 +3,23 @@ import { useState } from "react";
 import Link from "next/link";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { NavigationMenu as Navbar } from "@/components/ui/navbar";
+import { Button } from "@/components/ui/button";
 
-export default function Navbar() {
+export default function NavbarMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white">
+    <header>
       <nav
         aria-label="Global"
         className="prose mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
+        <Navbar>
+          {" "}
+          <Button></Button>
+        </Navbar>
+
         <div className="flex w-full items-center justify-between lg:w-auto">
           <Link href="/" className="p-4 no-underline">
             <h1 className="m-0 text-2xl font-bold">
