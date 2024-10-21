@@ -70,6 +70,7 @@ export default function AddProduct() {
       }
     } catch (error) {
       setServerError("An unexpected error occurred. Please try again later.");
+      console.log(error);
     }
   };
 

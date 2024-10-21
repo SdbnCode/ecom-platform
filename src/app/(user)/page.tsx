@@ -4,6 +4,7 @@ import Item from "./types/item";
 import { useShoppingCart } from "../components/shoppingCart";
 import Image from "next/image";
 import "../globals.css";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   const { addToCart } = useShoppingCart();
@@ -31,12 +32,12 @@ export default function HomePage() {
             <p>{item.product}</p>
             <p>${item.price} CAD</p>
           </div>
-          <button
+          <Button
             onClick={() => addToCart(item)}
             className="btn btn-primary btn-wide"
           >
             Add to Cart
-          </button>
+          </Button>
         </div>
       ))}
     </div>
