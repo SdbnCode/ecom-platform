@@ -7,7 +7,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import Item from "../(user)/types/item";
+import Product from "@/prisma/client";
 import CartItem from "../(user)/types/cartItem";
 import ShoppingCartType from "../(user)/types/shoppingCartType";
 
@@ -51,12 +51,12 @@ export const ShoppingCartProvider = ({
     }
   }, [cart, isMounted]);
 
-  const addToCart = (item: Item) => {
-    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+  const addToCart = (product: product) => {
+    const existingItem = cart.find((cartItem) => cartItem.id === product.id);
     if (existingItem) {
       setCart((prevCart) =>
         prevCart.map((cartItem) =>
-          cartItem.id === item.id
+          cartItem.id === product.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem,
         ),
@@ -65,13 +65,13 @@ export const ShoppingCartProvider = ({
       setCart((prevCart) => [
         ...prevCart,
         {
-          id: item.id,
-          brand: item.brand,
-          product: item.product,
-          alt: item.alt,
-          price: item.price,
+          id: product.id,
+          brand: product.brand,
+          description: product.description,
+          alt: product.alt,
+          price: product.price,
           quantity: 1,
-          image: item.image,
+          image: product.image,
         },
       ]);
     }
@@ -87,10 +87,10 @@ export const ShoppingCartProvider = ({
 
   const updateQuantity = (id: number, quantity: number) => {
     setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: quantity > 0 ? quantity : 1 }
-          : item,
+      prevCart.map((product) =>
+        product.id === id
+          ? { ...product, quantity: quantity > 0 ? quantity : 1 }
+          : product,
       ),
     );
   };

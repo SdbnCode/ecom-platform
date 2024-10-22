@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useShoppingCart } from "../../components/shoppingCart";
+import Product from "@prisma/client";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useShoppingCart();
@@ -9,6 +10,7 @@ export default function CartPage() {
   const cartTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
+    console.log(cart),
   );
 
   return (
@@ -28,43 +30,43 @@ export default function CartPage() {
               <label className="col-span-1 text-center">Quantity</label>
               <label className="col-span-1 text-right">Price</label>
             </div>
-            {cart.map((item) => (
+            {cart.map((product) => (
               <div
-                key={item.id}
+                key={product.id}
                 className="grid grid-cols-6 items-center gap-4 border-b py-4"
               >
                 <div className="col-span-1 flex justify-center">
                   <Image
-                    src={item.image}
-                    alt={item.alt}
+                    src={product.image}
+                    alt={product.alt}
                     width={96}
                     height={96}
                     className="rounded-md object-cover"
                   />
                 </div>
                 <h3 className="col-span-2 font-medium text-gray-800">
-                  {item.product}
+                  {product.description}
                 </h3>
-                <p className="col-span-1 text-gray-600">{item.brand}</p>
+                <p className="col-span-1 text-gray-600">{product.brand}</p>
                 <div className="col-span-1 flex flex-col items-center">
                   <input
                     type="number"
                     min="1"
-                    value={item.quantity}
+                    value={product.quantity}
                     onChange={(e) =>
-                      updateQuantity(item.id, parseInt(e.target.value))
+                      updateQuantity(product.id, parseInt(e.target.value))
                     }
                     className="w-16 rounded-md border text-center"
                   />
                   <button
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(product.id)}
                     className="mt-2 text-sm text-red-500 hover:underline"
                   >
                     Remove
                   </button>
                 </div>
                 <p className="col-span-1 text-right text-gray-800">
-                  ${(item.price * item.quantity).toFixed(2)} CAD
+                  ${(product.price * product.quantity).toFixed(2)} CAD
                 </p>
               </div>
             ))}

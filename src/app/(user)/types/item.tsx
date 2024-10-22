@@ -1,7 +1,7 @@
 interface product {
   id: number;
   brand: string;
-  product: string;
+  description: string;
   price: number;
   image: string;
   alt: string;

@@ -3,7 +3,7 @@ const itemData = [
   {
     id: 1,
     brand: "Wilson",
-    product: "Wilson Evolution Basketball",
+    description: "Wilson Evolution Basketball",
     price: 75.99,
     image: "/storeProducts/basketball.png",
     alt: "Wilson Basketball",
@@ -11,7 +11,7 @@ const itemData = [
   {
     id: 2,
     brand: "Wilson",
-    product: "Official NBA Basketball",
+    description: "Official NBA Basketball",
     price: 299.99,
     image: "/storeProducts/basketball2.png",
     alt: "NBA Basketball",
@@ -19,7 +19,7 @@ const itemData = [
   {
     id: 3,
     brand: "NCAA",
-    product: "Official NCAA Basketball",
+    description: "Official NCAA Basketball",
     price: 129.99,
     image: "/storeProducts/basketball3.png",
     alt: "NCAA Basketball",
@@ -27,7 +27,7 @@ const itemData = [
   {
     id: 4,
     brand: "Rawlings",
-    product: "Official MLB Baseball",
+    description: "Official MLB Baseball",
     price: 10.99,
     image: "/storeProducts/baseball.png",
     alt: "MLB baseball",
@@ -35,7 +35,7 @@ const itemData = [
   {
     id: 5,
     brand: "Rawlings",
-    product: "Official Rawling Tball",
+    description: "Official Rawling Tball",
     price: 7.99,
     image: "/storeProducts/baseball2.png",
     alt: "Tball Baseball",
@@ -43,7 +43,7 @@ const itemData = [
   {
     id: 6,
     brand: "Wilson",
-    product: "Official NFL Football",
+    description: "Official NFL Football",
     price: 299.99,
     image: "/storeProducts/football.png",
     alt: "Offical NFL Football",
@@ -51,7 +51,7 @@ const itemData = [
   {
     id: 7,
     brand: "Discraft",
-    product: "Discraft Ultra-star Frisbee",
+    description: "Discraft Ultra-star Frisbee",
     price: 29.99,
     image: "/storeProducts/Frisbee.png",
     alt: "Frisbee",
@@ -59,7 +59,7 @@ const itemData = [
   {
     id: 8,
     brand: "Adidas",
-    product: "Adidas World Cup Soccerball",
+    description: "Adidas World Cup Soccerball",
     price: 199.99,
     image: "/storeProducts/soccerball.png",
     alt: "Adidas Soccerball",
@@ -67,7 +67,7 @@ const itemData = [
   {
     id: 9,
     brand: "Nike",
-    product: "Nike Soccerball",
+    description: "Nike Soccerball",
     price: 59.99,
     image: "/storeProducts/soccerball2.png",
     alt: "Nike Soccerball",
@@ -75,7 +75,7 @@ const itemData = [
   {
     id: 10,
     brand: "Nike",
-    product: "Nike Academy Soccerball",
+    description: "Nike Academy Soccerball",
     price: 70.99,
     image: "/storeProducts/soccerball3.png",
     alt: "Nike Academy Soccerball",
@@ -83,7 +83,7 @@ const itemData = [
   {
     id: 11,
     brand: "Wilson",
-    product: "Wilson NCAA Soccerball",
+    description: "Wilson NCAA Soccerball",
     price: 129.99,
     image: "/storeProducts/soccerball4.png",
     alt: "Wilson NCAA Soccerball",
@@ -91,7 +91,7 @@ const itemData = [
   {
     id: 12,
     brand: "Spikeball",
-    product: "Spikeball Pro Set",
+    description: "Spikeball Pro Set",
     price: 129.99,
     image: "/storeProducts/spikeballpro.png",
     alt: "Spikeball Pro Set",
@@ -99,7 +99,7 @@ const itemData = [
   {
     id: 13,
     brand: "Spikeball",
-    product: "Spikeball Set",
+    description: "Spikeball Set",
     price: 99.99,
     image: "/storeProducts/spikeballset.png",
     alt: "Spikeball Set",
@@ -107,7 +107,7 @@ const itemData = [
   {
     id: 14,
     brand: "Wilson",
-    product: "Wilson Tennis Balls (3 pack)",
+    description: "Wilson Tennis Balls (3 pack)",
     price: 4.99,
     image: "/storeProducts/tennisball.png",
     alt: "Wilson Tennis Balls",
@@ -115,7 +115,7 @@ const itemData = [
   {
     id: 15,
     brand: "Propen",
-    product: "Propen Tennis Balls (3 pack)",
+    description: "Propen Tennis Balls (3 pack)",
     price: 5.99,
     image: "/storeProducts/tennisball2.png",
     alt: "Propen Tennis Balls",
@@ -123,7 +123,7 @@ const itemData = [
   {
     id: 16,
     brand: "Pen",
-    product: "Pen Tennis Balls (3 pack)",
+    description: "Pen Tennis Balls (3 pack)",
     price: 3.99,
     image: "/storeProducts/tennisball3.png",
     alt: "Pen Tennis Balls",
@@ -131,7 +131,7 @@ const itemData = [
   {
     id: 17,
     brand: "Misaka",
-    product: "Misaka Volleyball",
+    description: "Misaka Volleyball",
     price: 79.99,
     image: "/storeProducts/volleyball.png",
     alt: "Misaka Volleyball",
@@ -139,7 +139,7 @@ const itemData = [
   {
     id: 18,
     brand: "Molten",
-    product: "Molten Volleyball",
+    description: "Molten Volleyball",
     price: 79.99,
     image: "/storeProducts/volleyball2.png",
     alt: "Molten Volleyball",
@@ -147,7 +147,7 @@ const itemData = [
   {
     id: 19,
     brand: "Matrix",
-    product: "Matrix Volleyball",
+    description: "Matrix Volleyball",
     price: 79.99,
     image: "/storeProducts/volleyball3.png",
     alt: "Matrix Volleyball",
@@ -155,7 +155,7 @@ const itemData = [
   {
     id: 20,
     brand: "Five",
-    product: "Five Volleyball",
+    description: "Five Volleyball",
     price: 65.99,
     image: "/storeProducts/volleyball4.png",
     alt: "Five Volleyball",

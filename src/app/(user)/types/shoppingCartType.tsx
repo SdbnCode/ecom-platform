@@ -1,9 +1,9 @@
 import CartItem from "./cartItem";
-import Item from "./item";
+import Product from "@/prisma/client";
 
 interface ShoppingCartType {
   cart: CartItem[];
-  addToCart: (item: Item) => void;
+  addToCart: (product: product) => void;
   removeFromCart: (id: number) => void;
   emptyCart: () => void;
   updateQuantity: (id: number, quantity: number) => void;
