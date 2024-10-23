@@ -19,14 +19,15 @@ import {
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
-  price: z
-    .number({ invalid_type_error: "Price must be a number" })
-    .min(0, "Price must be more than 0"),
+  price: z.coerce.number().min(0, "Price must be more than 0"),
   description: z.string().min(1, "Description is required"),
-  category: z.string().min(1, "Category is required"),
   image: z
     .instanceof(FileList)
-    .refine((files) => files.length > 0, "Image is required"),
+    .refine((files) => files.length > 0, "Image is required")
+    .refine(
+      (files) => files[0]?.type.startsWith("image/"),
+      "Only image files are allowed (JPEG, PNG, etc.).",
+    ),
 });
 
 export default function AddProduct() {
@@ -37,29 +38,24 @@ export default function AddProduct() {
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
-      price: undefined,
+      price: 0,
       description: "",
-      category: "",
       image: undefined,
     },
   });
 
+  // Handling form submission
   const onSubmit = async (values: z.infer<typeof productSchema>) => {
-    const productData = {
-      name: values.name,
-      price: values.price,
-      description: values.description,
-      category: values.category,
-      image: values.image[0],
-    };
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("price", values.price.toString());
+    formData.append("description", values.description);
+    formData.append("image", values.image[0]);
 
     try {
       const response = await fetch("/api/products", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
+        body: formData,
       });
 
       if (response.ok) {
@@ -143,7 +139,11 @@ export default function AddProduct() {
                   <FormItem>
                     <FormLabel>Product Image</FormLabel>
                     <FormControl>
-                      <Input type="file" accept="image/*" {...field} />
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => field.onChange(e.target.files)}
+                      />
                     </FormControl>
                     <FormMessage>
                       {form.formState.errors.image?.message}
