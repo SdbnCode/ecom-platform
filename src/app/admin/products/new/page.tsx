@@ -1,61 +1,13 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
+import addProduct from "../../_actions/products";
+import { Label } from "@/components/ui/label";
 
 export default function AddProduct() {
-  const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
-
-  const form = useForm<z.infer<typeof productSchema>>({
-    resolver: zodResolver(productSchema),
-    defaultValues: {
-      name: "",
-      price: 0,
-      description: "",
-      image: undefined,
-    },
-  });
-
-  // Handling form submission
-  const onSubmit = async (values: z.infer<typeof productSchema>) => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("price", values.price.toString());
-    formData.append("description", values.description);
-    formData.append("image", values.image[0]);
-
-    try {
-      const response = await fetch("/api/products", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        router.push("/admin/products");
-      } else {
-        const data = await response.json();
-        setServerError(data.message);
-      }
-    } catch (error) {
-      setServerError("An unexpected error occurred. Please try again later.");
-      console.log(error);
-    }
-  };
-
   return (
     <div className="my-8 flex justify-center">
       <Card className="w-full max-w-md">
@@ -63,90 +15,56 @@ export default function AddProduct() {
           <h1 className="text-lg font-bold">Add Product</h1>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
+          <form action={addProduct} className="space-y-4">
+            <div>
+              <Label htmlFor="name">Product Name</Label>
+              <Input
+                placeholder="Enter product name"
+                type="text"
+                id="name"
                 name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Product Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter product name" {...field} />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.name?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
+                required
               />
+            </div>
 
-              <FormField
+            <div>
+              <Label htmlFor="price">Price</Label>
+              <Input
+                type="number"
+                placeholder="0.00"
+                step="0.01"
+                id="price"
                 name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Price</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="0.00"
-                        step="0.01"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.price?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
+                required
               />
+            </div>
 
-              <FormField
+            <div>
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                placeholder="Enter product description"
+                id="description"
                 name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Enter product description"
-                        {...field}
-                        rows={4}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.description?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
+                rows={4}
+                required
               />
+            </div>
 
-              <FormField
+            <div>
+              <Label htmlFor="image">Product Image</Label>
+              <Input
+                type="file"
+                accept="image/*"
+                id="image"
                 name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Product Image</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => field.onChange(e.target.files)}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.image?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
+                required
               />
+            </div>
 
-              {serverError && (
-                <p className="text-error mb-0 mt-1 text-sm">{serverError}</p>
-              )}
-
-              <Button type="submit" className="w-full">
-                Add Product
-              </Button>
-            </form>
-          </Form>
+            <Button type="submit" className="w-full">
+              Add Product
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>
