@@ -9,6 +9,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, addToCart }: ProductCardProps) {
+  if (!product) {
+    return null; // Avoid rendering the component if `product` is undefined
+  }
   return (
     <Card
       key={product.id}
@@ -24,7 +27,7 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
         />
       </CardHeader>
       <CardContent className="product-details">
-        <CardTitle>{product.brand}</CardTitle>
+        <CardTitle>{product.description}</CardTitle>
         <p>{product.description}</p>
         <p>${product.price.toFixed(2)} CAD</p>
       </CardContent>

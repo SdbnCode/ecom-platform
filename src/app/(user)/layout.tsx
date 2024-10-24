@@ -1,7 +1,7 @@
-import Navbar from "@/app/components/nav";
-import { ShoppingCartProvider } from "../components/shoppingCart";
+import Navbar from "./_components/nav";
+import { ShoppingCartProvider } from "./_components/shoppingCart";
 import "../globals.css";
-import Footer from "@/app/components/footer";
+import Footer from "./_components/footer";
 
 export const metadata = {
   title: "Athlete's Arena",

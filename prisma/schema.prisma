@@ -31,7 +31,7 @@ model Product {
   price Int
   description String?
   image String?
-  category String
+  alt String?
 
   available Boolean @default(true)
   createdAt DateTime @default(now())
@@ -45,8 +45,8 @@ model Order {
 
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productdId], references: [id], onDelete: Restrict)
-  productdId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  productId String
   
   total Int
   status String

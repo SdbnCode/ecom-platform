@@ -1,16 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useShoppingCart } from "../../components/shoppingCart";
-import Product from "@prisma/client";
+import { useShoppingCart } from "../_components/shoppingCart";
+// import { Product } from "@prisma/client";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useShoppingCart();
 
+  console.log(cart);
   const cartTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
-    console.log(cart),
   );
 
   return (

@@ -18,7 +18,7 @@ CREATE TABLE "Product" (
     "price" INTEGER NOT NULL,
     "description" TEXT,
     "image" TEXT,
-    "category" TEXT NOT NULL,
+    "alt" TEXT,
     "available" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE "Product" (
 CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "productdId" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
     "total" INTEGER NOT NULL,
     "status" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -46,4 +46,4 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_productdId_fkey" FOREIGN KEY ("productdId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -7,9 +7,9 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import Product from "@/prisma/client";
-import CartItem from "../(user)/types/cartItem";
-import ShoppingCartType from "../(user)/types/shoppingCartType";
+import CartItem from "../types/cartItem";
+import ShoppingCartType from "../types/shoppingCartType";
+import { Product } from "@prisma/client";
 
 // Define the props for the ShoppingCartProvider
 interface ShoppingCartProviderProps {
@@ -51,7 +51,7 @@ export const ShoppingCartProvider = ({
     }
   }, [cart, isMounted]);
 
-  const addToCart = (product: product) => {
+  const addToCart = (product: Product) => {
     const existingItem = cart.find((cartItem) => cartItem.id === product.id);
     if (existingItem) {
       setCart((prevCart) =>
@@ -66,18 +66,18 @@ export const ShoppingCartProvider = ({
         ...prevCart,
         {
           id: product.id,
-          brand: product.brand,
-          description: product.description,
-          alt: product.alt,
+          brand: product.name,
+          description: product.description || "",
+          alt: product.alt || "Product image",
           price: product.price,
           quantity: 1,
-          image: product.image,
+          image: product.image || "/default-image.jpg",
         },
       ]);
     }
   };
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: string) => {
     setCart((prevCart) => prevCart.filter((cartItem) => cartItem.id !== id));
   };
 
@@ -85,7 +85,7 @@ export const ShoppingCartProvider = ({
     setCart([]);
   };
 
-  const updateQuantity = (id: number, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number) => {
     setCart((prevCart) =>
       prevCart.map((product) =>
         product.id === id

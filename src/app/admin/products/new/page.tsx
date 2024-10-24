@@ -16,6 +16,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+// import prisma from "@/lib/prisma";
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
@@ -59,6 +60,13 @@ export default function AddProduct() {
       });
 
       if (response.ok) {
+        // prisma.product.create({
+        //   name: values.name,
+        //   price: values.price,
+        //   description: values.description,
+        //   image: values.image[0].name,
+        // });
+
         router.push("/admin/products");
       } else {
         const data = await response.json();
