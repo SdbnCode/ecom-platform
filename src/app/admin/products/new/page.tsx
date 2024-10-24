@@ -1,5 +1,4 @@
 "use client";
-import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -16,20 +15,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-// import prisma from "@/lib/prisma";
-
-const productSchema = z.object({
-  name: z.string().min(1, "Product name is required"),
-  price: z.coerce.number().min(0, "Price must be more than 0"),
-  description: z.string().min(1, "Description is required"),
-  image: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "Image is required")
-    .refine(
-      (files) => files[0]?.type.startsWith("image/"),
-      "Only image files are allowed (JPEG, PNG, etc.).",
-    ),
-});
 
 export default function AddProduct() {
   const router = useRouter();
@@ -60,13 +45,6 @@ export default function AddProduct() {
       });
 
       if (response.ok) {
-        // prisma.product.create({
-        //   name: values.name,
-        //   price: values.price,
-        //   description: values.description,
-        //   image: values.image[0].name,
-        // });
-
         router.push("/admin/products");
       } else {
         const data = await response.json();

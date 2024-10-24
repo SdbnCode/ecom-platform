@@ -1,6 +1,6 @@
 import React from "react";
 import "../globals.css";
-import AdminNav from "../components/adminNav";
+import AdminNav from "./_components/adminNav";
 
 export const metadata = {
   title: "Athlete's Arena",

@@ -11,7 +11,7 @@ export default function Navbar() {
   const path = usePathname();
 
   return (
-    <header className="bg-primary text-primary-foreground pb-6 shadow-lg">
+    <header className="bg-primary pb-6 text-primary-foreground shadow-lg">
       <div className="flex items-center justify-between px-6 py-4 lg:justify-center">
         <Link href="/" className="no-underline">
           <h1 className="text-3xl font-extrabold">
@@ -40,7 +40,7 @@ export default function Navbar() {
           <Link
             href="/admin/"
             className={cn(
-              "hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+              "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground",
               path === "/admin" && "bg-secondary text-secondary-foreground",
             )}
           >
@@ -50,7 +50,7 @@ export default function Navbar() {
           <Link
             href="/admin/products"
             className={cn(
-              "hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+              "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground",
               path === "/admin/products" &&
                 "bg-secondary text-secondary-foreground",
             )}
@@ -61,7 +61,7 @@ export default function Navbar() {
           <Link
             href="/admin/orders"
             className={cn(
-              "hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+              "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground",
               path === "/admin/orders" &&
                 "bg-secondary text-secondary-foreground",
             )}
@@ -78,14 +78,14 @@ export default function Navbar() {
         className="lg:hidden"
       >
         <div />
-        <DialogPanel className="sm:ring-primary-foreground bg-primary-foreground fixed inset-y-0 right-0 z-20 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1">
+        <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-primary-foreground px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-primary-foreground">
           <div className="flex items-center justify-between">
             <Link
               href="/"
               className="no-underline"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <h1 className="text-primary text-2xl font-bold">
+              <h1 className="text-2xl font-bold text-primary">
                 Athlete&apos;s Arena
                 <span className="sr-only">Athlete&apos;s Arena 2.0</span>
               </h1>
@@ -105,7 +105,7 @@ export default function Navbar() {
             <Link
               href="/admin"
               className={cn(
-                "hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-secondary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+                "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-secondary-foreground",
                 path === "/admin" && "bg-primary text-primary-foreground",
               )}
               onClick={() => setMobileMenuOpen(false)}
@@ -115,7 +115,7 @@ export default function Navbar() {
             <Link
               href="/admin/products"
               className={cn(
-                "hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+                "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground",
                 path === "/admin/products" &&
                   "bg-primary text-primary-foreground",
               )}
@@ -126,7 +126,7 @@ export default function Navbar() {
             <Link
               href="/admin/orders"
               className={cn(
-                "hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground rounded-lg px-4 py-3 text-lg font-semibold",
+                "rounded-lg px-4 py-3 text-lg font-semibold hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground",
                 path === "/admin/orders" &&
                   "bg-primary text-primary-foreground",
               )}
