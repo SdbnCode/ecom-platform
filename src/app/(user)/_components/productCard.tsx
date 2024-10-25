@@ -27,7 +27,7 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
         />
       </CardHeader>
       <CardContent className="product-details">
-        <CardTitle>{product.description}</CardTitle>
+        <CardTitle>{product.name}</CardTitle>
         <p>{product.description}</p>
         <p>${product.price.toFixed(2)} CAD</p>
       </CardContent>
