@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -56,6 +58,8 @@ export default function LoginPage() {
       <div className="prose w-full max-w-md gap-2 rounded-lg bg-white p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <h2 className="text-center">Login</h2>
+
+          {/* Email */}
           <div className="form-control">
             <div className="relative">
               <svg
@@ -67,7 +71,7 @@ export default function LoginPage() {
                 <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                 <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
               </svg>
-              <input
+              <Input
                 type="text"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Email"
@@ -75,11 +79,13 @@ export default function LoginPage() {
               />
             </div>
             {errors.email && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.email.message}
               </p>
             )}
           </div>
+
+          {/* Password */}
           <div className="form-control">
             <div className="relative">
               <svg
@@ -94,7 +100,7 @@ export default function LoginPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <input
+              <Input
                 type="password"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Password"
@@ -102,17 +108,15 @@ export default function LoginPage() {
               />
             </div>
             {errors.password && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.password.message}
               </p>
             )}
           </div>
           {errorMessage && (
-            <p className="text-center text-error">{errorMessage}</p>
+            <p className="text-error text-center">{errorMessage}</p>
           )}
-          <button className="btn btn-primary w-full text-white" type="submit">
-            Login
-          </button>
+          <Button type="submit">Login</Button>
           <p className="text-center text-sm">
             Don&apos;t have an account?{" "}
             <Link href="/register" className="link link-primary">

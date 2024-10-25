@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 // Define the form validation schema
 const FormSchema = z
@@ -74,9 +76,10 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <h2 className="text-center">Register</h2>
           {serverError && (
-            <p className="mb-0 mt-1 text-sm text-error">{serverError}</p>
+            <p className="text-error mb-0 mt-1 text-sm">{serverError}</p>
           )}
-          <div className="form-control">
+          <div>
+            {/* Email */}
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +90,7 @@ export default function RegisterPage() {
                 <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                 <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
               </svg>
-              <input
+              <Input
                 type="text"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Email"
@@ -96,12 +99,14 @@ export default function RegisterPage() {
               />
             </div>
             {errors.email && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.email.message}
               </p>
             )}
           </div>
-          <div className="form-control">
+
+          {/* Password */}
+          <div>
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +120,7 @@ export default function RegisterPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <input
+              <Input
                 type="password"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Password"
@@ -124,11 +129,13 @@ export default function RegisterPage() {
               />
             </div>
             {errors.password && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.password.message}
               </p>
             )}
           </div>
+
+          {/* Confirm Password */}
           <div className="form-control">
             <div className="relative">
               <svg
@@ -143,7 +150,7 @@ export default function RegisterPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              <input
+              <Input
                 type="password"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Confirm Password"
@@ -152,11 +159,13 @@ export default function RegisterPage() {
               />
             </div>
             {errors.confirmPassword && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.confirmPassword.message}
               </p>
             )}
           </div>
+
+          {/* Address */}
           <div className="form-control">
             <div className="relative">
               <svg
@@ -169,7 +178,7 @@ export default function RegisterPage() {
               >
                 <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
               </svg>
-              <input
+              <Input
                 type="text"
                 className="input input-bordered w-full bg-inherit pl-10"
                 placeholder="Address"
@@ -177,17 +186,12 @@ export default function RegisterPage() {
               />
             </div>
             {errors.address && (
-              <p className="mb-0 mt-1 text-sm text-error">
+              <p className="text-error mb-0 mt-1 text-sm">
                 {errors.address.message}
               </p>
             )}
           </div>
-          <button
-            className="btn btn-primary mb-4 w-full text-white"
-            type="submit"
-          >
-            Register
-          </button>
+          <Button type="submit">Register</Button>
           <p className="text-center text-sm">
             Already a user?{" "}
             <Link href="/login" className="link link-primary">
