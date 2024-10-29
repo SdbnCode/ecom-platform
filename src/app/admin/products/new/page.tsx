@@ -6,8 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import addNewProduct from "../../_actions/products";
 import { Label } from "@/components/ui/label";
+import { useFormState } from "react-dom";
 
 export default function AddProduct() {
+  const [error, action] = useFormState(addNewProduct, {});
+
   return (
     <div className="my-8 flex justify-center">
       <Card className="w-full max-w-md">
@@ -15,7 +18,7 @@ export default function AddProduct() {
           <h1 className="text-lg font-bold">Add Product</h1>
         </CardHeader>
         <CardContent>
-          <form action={addNewProduct} className="space-y-4">
+          <form action={action} className="space-y-4">
             <div>
               <Label htmlFor="name">Product Name</Label>
               <Input
@@ -25,6 +28,7 @@ export default function AddProduct() {
                 name="name"
                 required
               />
+              {error.name && <p className="text-destructive">{error.name}</p>}
             </div>
 
             <div>
@@ -37,6 +41,7 @@ export default function AddProduct() {
                 name="price"
                 required
               />
+              {error.price && <p className="text-destructive">{error.price}</p>}
             </div>
 
             <div>
@@ -48,6 +53,9 @@ export default function AddProduct() {
                 rows={4}
                 required
               />
+              {error.description && (
+                <p className="text-destructive">{error.description}</p>
+              )}
             </div>
 
             <div>
@@ -59,6 +67,7 @@ export default function AddProduct() {
                 name="image"
                 required
               />
+              {error.image && <p className="text-destructive">{error.image}</p>}
             </div>
 
             <Button type="submit" className="w-full">
