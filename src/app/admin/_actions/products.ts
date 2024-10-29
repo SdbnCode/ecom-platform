@@ -47,6 +47,7 @@ export default async function addNewProduct(
       price: data.price,
       description: data.description,
       image: imagePath,
+      available: false,
     },
   });
 
