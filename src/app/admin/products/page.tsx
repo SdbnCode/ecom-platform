@@ -1,6 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function ProductPage() {
@@ -15,48 +26,49 @@ export default function ProductPage() {
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <table className="table w-full border-collapse">
-          {/* head */}
-          <thead>
-            <tr className="bg-gray-100">
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Description</th>
-              <th>Stock </th>
-              <th>
+        <Table className="table w-full border-collapse">
+          <TableHeader>
+            <TableRow className="bg-gray-100">
+              <TableHead>
+                <Label>
+                  <Input type="checkbox" className="" />
+                </Label>
+              </TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Stock </TableHead>
+              <TableHead>
                 <span className="sr-only">Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
-              <td>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableHead>
+                <Label>
+                  <Input type="checkbox" className="" />
+                </Label>
+              </TableHead>
+              <TableCell>
                 <div className="flex items-center gap-3">
-                  <div className="">{/* <Image /> */}</div>
+                  <Image src="" alt="">
+                    {/* <Image /> */}
+                  </Image>
                   <div>
                     <span>Product Name</span>
                   </div>
                 </div>
-              </td>
-              <td>$100</td>
-              <td>Product Description</td>
-              <td></td>
-              <td>
-                <button className="btn btn-primary btn-sm">Edit</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </TableCell>
+              <TableCell>$100</TableCell>
+              <TableCell>Product Description</TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <Button className="btn btn-primary btn-sm">Edit</Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
