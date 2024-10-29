@@ -26,18 +26,20 @@ export default function ProductPage() {
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <Table className="table w-full border-collapse">
+        <Table>
           <TableHeader>
-            <TableRow className="bg-gray-100">
+            <TableRow>
               <TableHead>
                 <Label>
                   <Input type="checkbox" className="" />
                 </Label>
               </TableHead>
+              <TableHead>Image</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Description</TableHead>
               <TableHead>Stock </TableHead>
+              <TableHead> Avaliablility </TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -51,15 +53,11 @@ export default function ProductPage() {
                 </Label>
               </TableHead>
               <TableCell>
-                <div className="flex items-center gap-3">
-                  <Image src="" alt="">
-                    {/* <Image /> */}
-                  </Image>
-                  <div>
-                    <span>Product Name</span>
-                  </div>
-                </div>
+                <Image src="" alt="">
+                  {/* <Image /> */}
+                </Image>
               </TableCell>
+              <TableCell>Product Name</TableCell>
               <TableCell>$100</TableCell>
               <TableCell>Product Description</TableCell>
               <TableCell></TableCell>
