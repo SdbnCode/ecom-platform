@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import addProduct from "../../_actions/products";
+import addNewProduct from "../../_actions/products";
 import { Label } from "@/components/ui/label";
 
 export default function AddProduct() {
@@ -15,7 +15,7 @@ export default function AddProduct() {
           <h1 className="text-lg font-bold">Add Product</h1>
         </CardHeader>
         <CardContent>
-          <form action={addProduct} className="space-y-4">
+          <form action={addNewProduct} className="space-y-4">
             <div>
               <Label htmlFor="name">Product Name</Label>
               <Input

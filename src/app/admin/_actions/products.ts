@@ -2,23 +2,21 @@
 import z from "zod";
 import prisma from "@/lib/prisma";
 import fs from "fs/promises";
-import path from "path";
 import { redirect } from "next/navigation";
 
-const MaxFileSize = 2 * 1024 * 1024;
+const imageSchema = z
+  .instanceof(File)
+  .refine((file) => file.type.startsWith("image/"), {
+    message: "Only image files are allowed",
+  });
 
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   price: z.coerce.number().min(0, "Price must be more than 0"),
   description: z.string().min(1, "Description is required"),
-  image: z
-    .instanceof(File)
-    .refine((file) => file.type.startsWith("image/"), {
-      message: "Only image files are allowed (JPEG, PNG, etc.).",
-    })
-    .refine((file) => file.size <= MaxFileSize, {
-      message: "File size must be less than 2MB",
-    }),
+  image: imageSchema.refine((file) => file.size > 0, {
+    message: "Image is required",
+  }),
 });
 
 export default async function addNewProduct(formData: FormData) {
@@ -27,13 +25,13 @@ export default async function addNewProduct(formData: FormData) {
   );
 
   if (!result.success) {
-    return { error: result.error.formErrors.fieldErrors };
+    throw new Error(JSON.stringify(result.error.formErrors.fieldErrors));
   }
 
   const data = result.data;
 
   await fs.mkdir("public/products", { recursive: true });
-  const imagePath = path.join("products", data.image.name);
+  const imagePath = `products/${data.image.name}`;
 
   await fs.writeFile(
     `public/${imagePath}`,
