@@ -53,3 +53,18 @@ export default async function addNewProduct(
 
   redirect("/admin/products");
 }
+
+export async function ToggleAvailableforPurchase(
+  id: string,
+  available: boolean,
+) {
+  await prisma.product.update({
+    where: { id },
+    data: { available: !available },
+  });
+}
+
+export async function DeleteProduct(id: string) {
+  const product = await prisma.product.delete({ where: { id } });
+  await fs.unlink(`public/${product.image}`);
+}

@@ -1,6 +1,12 @@
 "use server";
 
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -13,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
+import { DeleteProduct, ToggleAvailableforPurchase } from "./dropDown";
 
 interface Product {
   id: string;
@@ -73,16 +80,40 @@ export default async function ProductTable({
                 />
               </TableCell>
               <TableCell>{product.name}</TableCell>
-              <TableCell>{product.price.toFixed(2)} CAD</TableCell>
+              <TableCell>$ {product.price.toFixed(2)} CAD</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product._count.orders}</TableCell>
               <TableCell>
                 {product.available ? "Available" : "Not Available"}
               </TableCell>
               <TableCell>
-                <Button asChild>
-                  <Link href={`/admin/products/${product.id}`}>Edit</Link>
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Button>...</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Link
+                        className="px-2"
+                        href={`/admin/products/${product.id}`}
+                      >
+                        Edit
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ToggleAvailableforPurchase
+                        id={product.id}
+                        available={product.available}
+                      ></ToggleAvailableforPurchase>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <DeleteProduct
+                        id={product.id}
+                        disabled={product._count.orders > 0}
+                      ></DeleteProduct>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}
