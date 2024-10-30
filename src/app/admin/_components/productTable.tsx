@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-import { DeleteProduct, ToggleAvailableforPurchase } from "./dropDown";
+import { DeleteNewProduct, ToggleAvailableforPurchase } from "./dropDown";
 
 interface Product {
   id: string;
@@ -107,10 +107,10 @@ export default async function ProductTable({
                       ></ToggleAvailableforPurchase>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <DeleteProduct
+                      <DeleteNewProduct
                         id={product.id}
                         disabled={product._count.orders > 0}
-                      ></DeleteProduct>
+                      ></DeleteNewProduct>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

@@ -2,7 +2,7 @@
 import z from "zod";
 import prisma from "@/lib/prisma";
 import fs from "fs/promises";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const imageSchema = z
   .instanceof(File)
@@ -54,17 +54,14 @@ export default async function addNewProduct(
   redirect("/admin/products");
 }
 
-export async function ToggleAvailableforPurchase(
-  id: string,
-  available: boolean,
-) {
+export async function UpdateAvailability(id: string, available: boolean) {
   await prisma.product.update({
     where: { id },
-    data: { available: !available },
+    data: { available },
   });
 }
 
-export async function DeleteProduct(id: string) {
+export async function deleteProduct(id: string) {
   const product = await prisma.product.delete({ where: { id } });
-  await fs.unlink(`public/${product.image}`);
+  if (product == null) return notFound();
 }

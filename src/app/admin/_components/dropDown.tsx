@@ -1,7 +1,8 @@
 "use client";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import prisma from "@/lib/prisma";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { deleteProduct, UpdateAvailability } from "../_actions/products";
 
 export function ToggleAvailableforPurchase({
   id,
@@ -11,15 +12,14 @@ export function ToggleAvailableforPurchase({
   available: boolean;
 }) {
   const [loading, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <DropdownMenuItem
       disabled={loading}
       onClick={() => {
         startTransition(async () => {
-          await prisma.product.update({
-            where: { id },
-            data: { available: !available },
-          });
+          await UpdateAvailability(id, !available);
+          router.refresh();
         });
       }}
     >
@@ -28,7 +28,7 @@ export function ToggleAvailableforPurchase({
   );
 }
 
-export function DeleteProduct({
+export function DeleteNewProduct({
   id,
   disabled,
 }: {
@@ -36,12 +36,14 @@ export function DeleteProduct({
   disabled: boolean;
 }) {
   const [loading, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <DropdownMenuItem
       disabled={loading || disabled}
       onClick={() => {
         startTransition(async () => {
-          await prisma.product.delete({ where: { id } });
+          await deleteProduct(id);
+          router.refresh();
         });
       }}
     >
