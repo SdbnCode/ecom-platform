@@ -34,7 +34,7 @@ export default async function addNewProduct(
   const data = result.data;
 
   await fs.mkdir("public/products", { recursive: true });
-  const imagePath = `products/${data.image.name}`;
+  const imagePath = `/products/${data.image.name}`;
 
   await fs.writeFile(
     `public/${imagePath}`,

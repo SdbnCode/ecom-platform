@@ -13,9 +13,24 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-import Product from "@/lib/prisma";
 
-export default async function ProductTable({ product }) {
+interface Product {
+  id: string;
+  image: string | null;
+  name: string;
+  price: number;
+  description: string | null;
+  _count: {
+    orders: number;
+  };
+  available: boolean;
+}
+
+export default async function ProductTable({
+  product,
+}: {
+  product: Product[];
+}) {
   if (product.length === 0) {
     return <p>No products found</p>;
   }
@@ -51,16 +66,16 @@ export default async function ProductTable({ product }) {
               </TableCell>
               <TableCell>
                 <Image
-                  src={product.image}
+                  src={product.image ?? "/default-image.png"}
                   alt={product.name}
                   width={50}
                   height={50}
                 />
               </TableCell>
               <TableCell>{product.name}</TableCell>
-              <TableCell>{product.price}</TableCell>
+              <TableCell>{product.price.toFixed(2)} CAD</TableCell>
               <TableCell>{product.description}</TableCell>
-              <TableCell>{product._count.order}</TableCell>
+              <TableCell>{product._count.orders}</TableCell>
               <TableCell>
                 {product.available ? "Available" : "Not Available"}
               </TableCell>
