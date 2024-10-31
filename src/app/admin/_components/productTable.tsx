@@ -84,7 +84,13 @@ export default async function ProductTable({
               <TableCell>{product.description}</TableCell>
               <TableCell>{product._count.orders}</TableCell>
               <TableCell>
-                {product.available ? "Available" : "Not Available"}
+                <span
+                  className={`rounded-full px-2 py-1 text-white ${
+                    product.available ? "bg-green-500" : "bg-red-500"
+                  }`}
+                >
+                  {product.available ? "Available" : "Not Available"}
+                </span>
               </TableCell>
               <TableCell>
                 <DropdownMenu>
