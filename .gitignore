@@ -36,3 +36,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#images
+/public/product
+/public/storeProducts
+
+#gitignore
+.gitignore
+.prettierrc
+.eslintrc
+.next.config.mjs
