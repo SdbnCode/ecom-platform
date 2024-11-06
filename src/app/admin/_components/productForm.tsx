@@ -2,14 +2,17 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useFormState } from "react-dom";
-import addNewProduct from "../_actions/products";
+import addNewProduct, { updateProduct } from "../_actions/products";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 
 export default function ProductForm({ product }: { product: Product | null }) {
-  const [error, action] = useFormState(addNewProduct, {});
+  const [error, action] = useFormState(
+    product == null ? addNewProduct : updateProduct.bind(null, product.id),
+    {},
+  );
 
   return (
     <form action={action} className="space-y-4">

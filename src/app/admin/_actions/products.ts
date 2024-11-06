@@ -6,8 +6,8 @@ import { notFound, redirect } from "next/navigation";
 
 const imageSchema = z
   .instanceof(File)
-  .refine((file) => file.type.startsWith("image/"), {
-    message: "Only image files are allowed",
+  .refine((file) => file.type.startsWith("image/") || file.size === 0, {
+    message: "Only image files are allowed or no image at all",
   });
 
 const productSchema = z.object({
@@ -52,6 +52,52 @@ export default async function addNewProduct(
   });
 
   redirect("/admin/products");
+}
+
+const editSchema = productSchema.extend({
+  image: imageSchema.optional(),
+});
+
+export async function updateProduct(
+  id: string,
+  prevState: unknown,
+  formData: FormData,
+) {
+  {
+    const result = editSchema.safeParse(Object.fromEntries(formData.entries()));
+
+    if (!result.success) {
+      return result.error.formErrors.fieldErrors;
+    }
+
+    const data = result.data;
+    const product = await prisma.product.findUnique({ where: { id } });
+
+    if (product == null) return notFound();
+
+    let imagePath = product.image;
+
+    if (data.image != null && data.image.size > 0) {
+      await fs.unlink(`public${product.image}`);
+      imagePath = `/products/${data.image.name}`;
+      await fs.writeFile(
+        `public${imagePath}`,
+        Buffer.from(await data.image.arrayBuffer()),
+      );
+    }
+
+    await prisma.product.update({
+      where: { id },
+      data: {
+        name: data.name,
+        price: data.price,
+        description: data.description,
+        image: imagePath,
+      },
+    });
+
+    redirect("/admin/products");
+  }
 }
 
 export async function UpdateAvailability(id: string, available: boolean) {
