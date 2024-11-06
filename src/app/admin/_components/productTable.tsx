@@ -101,7 +101,7 @@ export default async function ProductTable({
                     <DropdownMenuItem>
                       <Link
                         className="px-2"
-                        href={`/admin/products/${product.id}`}
+                        href={`/admin/products/${product.id}/edit`}
                       >
                         Edit
                       </Link>
