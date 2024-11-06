@@ -6,6 +6,7 @@ import addNewProduct from "../_actions/products";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Product } from "@prisma/client";
+import Image from "next/image";
 
 export default function ProductForm({ product }: { product: Product | null }) {
   const [error, action] = useFormState(addNewProduct, {});
@@ -65,7 +66,14 @@ export default function ProductForm({ product }: { product: Product | null }) {
         />
         {error.image && <p className="text-destructive">{error.image}</p>}
       </div>
-
+      {product?.image && (
+        <Image
+          src={product.image}
+          height="250"
+          width="250"
+          alt={product.name}
+        />
+      )}
       <Button type="submit" className="w-full">
         Add Product
       </Button>
