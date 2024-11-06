@@ -10,7 +10,7 @@ export default async function EditProductPage({
   const product = await prisma.product.findUnique({ where: { id } });
 
   return (
-    <div>
+    <div className="my-8 flex justify-center">
       <Card className="w-full max-w-md">
         <CardHeader>
           <h1 className="text-lg font-bold">Edit Product</h1>
