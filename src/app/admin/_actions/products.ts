@@ -19,6 +19,10 @@ const productSchema = z.object({
   }),
 });
 
+const editSchema = productSchema.extend({
+  image: imageSchema.optional(),
+});
+
 export default async function addNewProduct(
   oldState: unknown,
   formData: FormData,
@@ -53,10 +57,6 @@ export default async function addNewProduct(
 
   redirect("/admin/products");
 }
-
-const editSchema = productSchema.extend({
-  image: imageSchema.optional(),
-});
 
 export async function updateProduct(
   id: string,
