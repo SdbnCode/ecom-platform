@@ -1,38 +1,48 @@
-import { Product } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface ProductCardProps {
-  product: Product;
-  addToCart: (item: Product) => void;
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image: string | null;
+  alt: string | null;
 }
 
-export default function ProductCard({ product, addToCart }: ProductCardProps) {
-  if (!product) {
-    return null; // Avoid rendering the component if `product` is undefined
+export function ProductCard({
+  id,
+  name,
+  description,
+  price,
+  image,
+  alt,
+}: ProductCardProps) {
+  if (!id) {
+    return null;
   }
   return (
     <Card
-      key={product.id}
-      id={`product-card-${product.id}`}
+      key={id}
+      id={`product-card-${id}`}
       className="flex w-auto flex-col items-center justify-center border-none p-4 shadow-none"
     >
       <CardHeader>
         <Image
-          src={product.image || "/default-image.jpg"}
-          alt={product.alt || "Product image"}
+          src={image || "/default-image.jpg"}
+          alt={alt || "Product image"}
           width={192}
           height={192}
         />
       </CardHeader>
       <CardContent className="product-details">
-        <CardTitle>{product.name}</CardTitle>
-        <p>{product.description}</p>
-        <p>${product.price.toFixed(2)} CAD</p>
+        <CardTitle>{name}</CardTitle>
+        <p>{description}</p>
+        <p>${price.toFixed(2)} CAD</p>
       </CardContent>
 
-      <Button onClick={() => addToCart(product)}>Add to Cart</Button>
+      <Button>Add to Cart</Button>
     </Card>
   );
 }
