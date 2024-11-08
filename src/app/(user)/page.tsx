@@ -1,23 +1,21 @@
 import { useShoppingCart } from "./_components/shoppingCart";
 import "../globals.css";
-import ProductCard from "./_components/productCard";
+import { ProductCard } from "./_components/productCard";
 import prisma from "@/lib/prisma";
 import { Product } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-function NewestProducts() {
-  return;
-  prisma.product.findMany({
+async function NewestProducts() {
+  return prisma.product.findMany({
     where: { available: true },
     orderBy: { orders: { _count: "desc" } },
     take: 6,
   });
 }
 
-function MostPopularProducts() {
-  return;
-  prisma.product.findMany({
+async function MostPopularProducts() {
+  return prisma.product.findMany({
     where: { available: true },
     orderBy: { createdAt: "desc" },
     take: 6,
@@ -48,7 +46,7 @@ async function ProductGrid({ productsFetcher, title }: ProductGridProps) {
 }
 
 export default async function HomePage() {
-  const { addToCart } = useShoppingCart();
+  // const { addToCart } = useShoppingCart();
 
   return (
     <div className="container mx-auto">
