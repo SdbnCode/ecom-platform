@@ -1,10 +1,10 @@
-import { useShoppingCart } from "./_components/shoppingCart";
 import "../globals.css";
-import { ProductCard } from "./_components/productCard";
+import { ProductCard, ProductSkeleton } from "./_components/productCard";
 import prisma from "@/lib/prisma";
 import { Product } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Suspense } from "react";
 
 async function NewestProducts() {
   return prisma.product.findMany({
@@ -37,17 +37,32 @@ async function ProductGrid({ productsFetcher, title }: ProductGridProps) {
         </Button>
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {(await productsFetcher()).map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
+        <Suspense
+          fallback={
+            <>
+              <ProductSkeleton />
+              <ProductSkeleton />
+              <ProductSkeleton />
+            </>
+          }
+        >
+          <ProductSuspense productsFetcher={productsFetcher} />
+        </Suspense>
       </div>
     </div>
   );
 }
 
+async function ProductSuspense({
+  productsFetcher,
+}: {
+  productsFetcher: () => Promise<Product[]>;
+}) {
+  return (await productsFetcher()).map((product) => (
+    <ProductCard key={product.id} {...product} />
+  ));
+}
 export default async function HomePage() {
-  // const { addToCart } = useShoppingCart();
-
   return (
     <div className="container mx-auto">
       <h1 className="my-8 text-3xl font-bold">Newest Products</h1>
