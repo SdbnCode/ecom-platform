@@ -1,5 +1,4 @@
 import Navbar from "./_components/nav";
-import { ShoppingCartProvider } from "./_components/shoppingCart";
 import "../globals.css";
 import Footer from "./_components/footer";
 
@@ -16,11 +15,9 @@ export default function UserLayout({
   return (
     <html lang="en">
       <body>
-        <ShoppingCartProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </ShoppingCartProvider>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

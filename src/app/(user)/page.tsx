@@ -27,6 +27,16 @@ type ProductGridProps = {
   productsFetcher: () => Promise<Product[]>;
 };
 
+async function ProductSuspense({
+  productsFetcher,
+}: {
+  productsFetcher: () => Promise<Product[]>;
+}) {
+  return (await productsFetcher()).map((product) => (
+    <ProductCard key={product.id} {...product} />
+  ));
+}
+
 async function ProductGrid({ productsFetcher, title }: ProductGridProps) {
   return (
     <div className="space-y-4">
@@ -53,21 +63,10 @@ async function ProductGrid({ productsFetcher, title }: ProductGridProps) {
   );
 }
 
-async function ProductSuspense({
-  productsFetcher,
-}: {
-  productsFetcher: () => Promise<Product[]>;
-}) {
-  return (await productsFetcher()).map((product) => (
-    <ProductCard key={product.id} {...product} />
-  ));
-}
 export default async function HomePage() {
   return (
     <div className="container mx-auto">
-      <h1 className="my-8 text-3xl font-bold">Newest Products</h1>
       <ProductGrid title="Newest Products" productsFetcher={NewestProducts} />
-      <h1 className="my-8 text-3xl font-bold">Most Popular Products</h1>
       <ProductGrid
         title="Most Popular Products"
         productsFetcher={MostPopularProducts}
