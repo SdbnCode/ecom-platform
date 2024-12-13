@@ -3,6 +3,7 @@ import z from "zod";
 import prisma from "@/lib/prisma";
 import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 const imageSchema = z
   .instanceof(File)
@@ -55,6 +56,8 @@ export default async function addNewProduct(
     },
   });
 
+  revalidatePath("/products");
+  revalidatePath("/");
   redirect("/admin/products");
 }
 
@@ -96,6 +99,8 @@ export async function updateProduct(
       },
     });
 
+    revalidatePath("/products");
+    revalidatePath("/");
     redirect("/admin/products");
   }
 }
@@ -105,6 +110,9 @@ export async function UpdateAvailability(id: string, available: boolean) {
     where: { id },
     data: { available },
   });
+
+  revalidatePath("/products");
+  revalidatePath("/");
 }
 
 export async function deleteProduct(id: string) {
@@ -112,4 +120,7 @@ export async function deleteProduct(id: string) {
 
   if (product == null) return notFound();
   await fs.unlink(`public/${product.image}`);
+
+  revalidatePath("/products");
+  revalidatePath("/");
 }

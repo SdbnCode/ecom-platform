@@ -5,22 +5,31 @@ import { Product } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Suspense } from "react";
+import { cache } from "@/lib/cache";
 
-async function NewestProducts() {
-  return prisma.product.findMany({
-    where: { available: true },
-    orderBy: { orders: { _count: "desc" } },
-    take: 6,
-  });
-}
+const NewestProducts = cache(
+  () => {
+    return prisma.product.findMany({
+      where: { available: true },
+      orderBy: { orders: { _count: "desc" } },
+      take: 6,
+    });
+  },
+  ["/", "getNewestProducts"],
+  { revalidate: 60 * 60 * 24 },
+);
 
-async function MostPopularProducts() {
-  return prisma.product.findMany({
-    where: { available: true },
-    orderBy: { createdAt: "desc" },
-    take: 6,
-  });
-}
+const MostPopularProducts = cache(
+  () => {
+    return prisma.product.findMany({
+      where: { available: true },
+      orderBy: { createdAt: "desc" },
+      take: 6,
+    });
+  },
+  ["/", "getMostPopularProducts"],
+  { revalidate: 60 * 60 * 24 },
+);
 
 type ProductGridProps = {
   title: string;
