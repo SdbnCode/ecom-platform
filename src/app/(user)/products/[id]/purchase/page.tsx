@@ -26,7 +26,12 @@ export default async function purchasePage({
 
   return (
     <CheckoutForm
-      product={product}
+      product={{
+        image: product.image ?? "",
+        name: product.name,
+        price: product.price,
+        description: product.description ?? "",
+      }}
       clientSecret={paymentIntent.client_secret}
     />
   );
