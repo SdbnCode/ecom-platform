@@ -1,5 +1,6 @@
 "use client";
 
+import { userOrderExists } from "@/app/(user)/actions/order";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,15 +12,18 @@ import {
 } from "@/components/ui/card";
 import {
   Elements,
+  LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Image from "next/image";
+import { FormEvent, useState } from "react";
 
 type CheckoutFormProps = {
   product: {
+    id: string;
     image: string;
     name: string;
     price: number;
@@ -53,32 +57,79 @@ export function CheckoutForm({ product, clientSecret }: CheckoutFormProps) {
         </div>
       </div>
       <Elements options={{ clientSecret }} stripe={stripePromise}>
-        <Form price={product.price} />
+        <Form price={product.price} productId={product.id} />
       </Elements>
     </div>
   );
 }
 
-function Form({ price }: { price: number }) {
+function Form({ price, productId }: { price: number; productId: string }) {
   const stripe = useStripe();
   const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [email, setEmail] = useState<string>();
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (stripe == null || elements == null || email == null) return;
+
+    setIsLoading(true);
+
+    const orderExists = await userOrderExists(email, productId);
+
+    if (orderExists) {
+      setErrorMessage("You have already purchased these products.");
+      setIsLoading(false);
+      return;
+    }
+
+    stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-confirmed`,
+        },
+      })
+      .then(({ error }) => {
+        if (
+          error &&
+          (error.type === "card_error" || error.type === "validation_error")
+        ) {
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage("An unknown error occurred. Please try again.");
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
           <CardTitle>Payment Information</CardTitle>
-          <CardDescription className="text-destructive"> Error</CardDescription>
+          {errorMessage && (
+            <CardDescription className="text-destructive">
+              {" "}
+              {errorMessage}
+            </CardDescription>
+          )}
         </CardHeader>
         <CardContent>
           <PaymentElement />
+          <div className="mt-4">
+            <LinkAuthenticationElement
+              onChange={(e) => setEmail(e.value.email)}
+            />
+          </div>
         </CardContent>
         <CardFooter>
           <Button
             className="w-full"
             disabled={stripe == null || elements == null}
           >
-            Submit Payment - {price}
+            {isLoading ? "Purchasing..." : `Purchase - $${price}`}
           </Button>
         </CardFooter>
       </Card>

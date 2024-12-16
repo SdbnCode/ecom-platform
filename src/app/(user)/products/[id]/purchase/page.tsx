@@ -27,6 +27,7 @@ export default async function purchasePage({
   return (
     <CheckoutForm
       product={{
+        id: product.id,
         image: product.image ?? "",
         name: product.name,
         price: product.price,
