@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useShoppingCart } from "../_components/shoppingCart";
 
 interface ProductCardProps {
   id: string;
@@ -19,6 +21,7 @@ export function ProductCard({
   image,
   alt,
 }: ProductCardProps) {
+  const { addToCart } = useShoppingCart();
   if (!id) {
     return null;
   }
@@ -41,7 +44,23 @@ export function ProductCard({
         <p>{description}</p>
         <p>${price.toFixed(2)} CAD</p>
       </CardContent>
-      <Button>Add to Cart</Button>
+      <Button
+        onClick={() =>
+          addToCart({
+            id,
+            name,
+            description,
+            price,
+            image,
+            alt,
+            available: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+        }
+      >
+        Add to Cart
+      </Button>
     </Card>
   );
 }

@@ -1,9 +1,39 @@
-import React from "react";
-export default function CheckoutPage() {
+import prisma from "@/lib/prisma";
+import { notFound } from "next/navigation";
+import Stripe from "stripe";
+import { CheckoutForm } from "./_components/Checkout";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+
+export default async function purchasePage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = params;
+  const product = await prisma.product.findUnique({ where: { id } });
+  if (product == null) return notFound();
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: product.price,
+    currency: "usd",
+    metadata: { productId: product.id },
+  });
+
+  if (paymentIntent.client_secret == null) {
+    throw Error("Stripe failed to create payment intent");
+  }
+
   return (
-    <div>
-      <h1>Checkout</h1>
-      <p> Shipping Information</p>
-    </div>
+    <CheckoutForm
+      product={{
+        id: product.id,
+        image: product.image ?? "",
+        name: product.name,
+        price: product.price,
+        description: product.description ?? "",
+      }}
+      clientSecret={paymentIntent.client_secret}
+    />
   );
 }

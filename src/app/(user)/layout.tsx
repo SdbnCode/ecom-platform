@@ -1,6 +1,7 @@
 import Navbar from "./_components/nav";
 import "../globals.css";
 import Footer from "./_components/footer";
+import { ShoppingCartProvider } from "./_components/shoppingCart";
 
 export const metadata = {
   title: "Athlete's Arena",
@@ -15,9 +16,11 @@ export default function UserLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ShoppingCartProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ShoppingCartProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
-import { CheckoutForm } from "./_components/Checkout";
+import { CheckoutForm } from "../../../checkout/_components/Checkout";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
