@@ -1,39 +1,49 @@
-import prisma from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import Stripe from "stripe";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useShoppingCart } from "../_components/shoppingCart";
 import { CheckoutForm } from "./_components/Checkout";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+export default function CheckoutPage() {
+  const { cart } = useShoppingCart();
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
-export default async function purchasePage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params;
-  const product = await prisma.product.findUnique({ where: { id } });
-  if (product == null) return notFound();
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const response = await fetch("/api/payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart }),
+      });
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: product.price,
-    currency: "usd",
-    metadata: { productId: product.id },
-  });
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+    };
 
-  if (paymentIntent.client_secret == null) {
-    throw Error("Stripe failed to create payment intent");
+    if (cart.length > 0) fetchClientSecret();
+  }, [cart]);
+
+  if (!clientSecret) {
+    return <div>Loading...</div>;
   }
 
+  const totalAmount = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
   return (
-    <CheckoutForm
-      product={{
-        id: product.id,
-        image: product.image ?? "",
-        name: product.name,
-        price: product.price,
-        description: product.description ?? "",
-      }}
-      clientSecret={paymentIntent.client_secret}
-    />
+    <div className="container mx-auto py-10">
+      <CheckoutForm
+        product={{
+          id: "cart",
+          image: "/cart-image.jpg",
+          name: "Your Cart",
+          price: totalAmount,
+          description: "Items in your shopping cart",
+        }}
+        clientSecret={clientSecret}
+      />
+    </div>
   );
 }

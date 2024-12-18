@@ -12,14 +12,20 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useShoppingCart();
+  const router = useRouter();
 
   const cartTotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
+
+  const handleCheckout = () => {
+    router.push("/checkout");
+  };
 
   return (
     <div className="flex h-max flex-col items-center justify-center bg-white py-10">
@@ -104,7 +110,7 @@ export default function CartPage() {
                 Shipping, taxes, and discounts are calculated at checkout.
               </p>
               <Button
-                type="submit"
+                onClick={handleCheckout}
                 className="mt-4 rounded-md bg-primary px-6 py-2 text-white"
               >
                 Checkout
