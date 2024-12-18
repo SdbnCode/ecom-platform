@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       from: `Support <${process.env.SENDER_EMAIL}>`,
       to: email,
       subject: "Purchase confirmed",
-      text: `You have purchased ${product.name} for ${price}`,
+react: (<PurchaseReceiptEmail product={product} order={order} />)     
     });
   }
   return new NextResponse();
