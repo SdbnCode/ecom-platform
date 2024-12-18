@@ -1,4 +1,3 @@
-import { Order } from "@prisma/client";
 import {
   Button,
   Column,
@@ -10,7 +9,7 @@ import {
 
 type OrderInformationProps = {
   order: { id: string; createdAt: Date; total: number };
-  product: { imagePath: string; name: string; description: string };
+  product: { image: string; name: string; description: string };
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
@@ -48,7 +47,7 @@ export function OrderInformation({ order, product }: OrderInformationProps) {
         <Img
           width="100%"
           height={100}
-          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.imagePath}`}
+          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.image}`}
           alt={product.name}
         />
         <Row className="mt-8">

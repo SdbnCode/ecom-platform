@@ -14,22 +14,20 @@ type PurchaseReceiptEmailProps = {
     name: string;
     description: string;
     image: string;
-    imagePath: string;
   };
   order: { id: string; createdAt: Date; total: number };
 };
 
-ProductReceiptEmail.PreviewProps = {
+PurchaseReceiptEmail.PreviewProps = {
   product: {
     name: "Product Name",
-    imagePath: "",
     description: "Product Description",
-    image: "Product Image",
+    image: "",
   },
   order: { id: crypto.randomUUID(), createdAt: new Date(), total: 100 },
 } satisfies PurchaseReceiptEmailProps;
 
-export default function ProductReceiptEmail({
+export default function PurchaseReceiptEmail({
   product,
   order,
 }: PurchaseReceiptEmailProps) {
