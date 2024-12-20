@@ -1,10 +1,26 @@
-# Presenting Athelete's Arena 2.0
+# Athlete's Arena 2.0
 
-The goal of this project is to demonstrate the following:
+A modern eCommerce web application built with **Next.js**. The app provides a user-friendly interface for browsing products, managing a shopping cart, and completing secure payments using **Stripe Checkout**.
 
-1. Comprehension of Typescript
-2. User login authentication
-3. Storing passwords and usernames using posgres
-4. incorporate some sort of live chat bot
-5. Create a Ecommerence website that is aesthetic, responsive, and accessible
-6. Learn redis in order to use it for user carting
+![alt text](store.png)
+
+## Features
+
+- **Admin dashboard**: Add your own products, set your own prices, and track your sales using our admin dashboard.
+- **Shopping Cart**: Add, update, and remove items from the cart.
+- **Secure Payments**: Checkout using **Stripe** integration.
+- **Responsive Design**: Optimized for all devices, including desktops, tablets, and mobile phones.
+
+## Technologies Used
+
+- **Frontend**: Next.js, React, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: PostgreSQL (via Prisma)
+- **Payment Gateway**: Stripe
+- **Deployment**: TBD
+
+## Future Improvements
+
+- Add user authentication for personalized shopping experiences.
+- Implement product reviews and ratings.
+- Enhance admin capabilities for managing products and orders.
