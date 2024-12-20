@@ -1,14 +1,3 @@
-import { Button } from "@/components/ui/button";
-// import { Card } from "@/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormMessage,
-  FormItem,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
 export default function Footer() {
   return (
     <footer>

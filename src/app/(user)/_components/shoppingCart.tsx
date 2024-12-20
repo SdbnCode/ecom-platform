@@ -66,7 +66,7 @@ export const ShoppingCartProvider = ({
         ...prevCart,
         {
           id: product.id,
-          brand: product.name,
+          name: product.name,
           description: product.description || "",
           alt: product.alt || "Product image",
           price: product.price,

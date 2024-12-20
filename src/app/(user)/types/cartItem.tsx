@@ -1,11 +1,11 @@
 interface CartItem {
   id: string;
-  brand: string;
-  description: string;
-  alt: string;
+  image: string;
+  name: string;
   price: number;
   quantity: number;
-  image: string;
+  description: string;
+  alt: string;
 }
 
 export default CartItem;

@@ -70,7 +70,7 @@ export default function CartPage() {
                       />
                     </TableCell>
                     <TableCell className="p-4 text-center text-gray-700">
-                      {product.brand}
+                      {product.name}
                     </TableCell>
                     <TableCell className="p-4 text-center text-gray-700">
                       {product.description}

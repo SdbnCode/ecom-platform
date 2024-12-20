@@ -1,34 +1,36 @@
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export default async function SucessPage({
+export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { payment_intent: string };
+  searchParams: { payment_intent: string; redirect_status?: string };
 }) {
-  const paymentIntent = await stripe.paymentIntents.retrieve(
-    searchParams.payment_intent,
-  );
+  const { payment_intent, redirect_status } = searchParams;
 
-  if (paymentIntent.metadata.productId == null) return notFound();
+  if (!payment_intent) return notFound();
+
+  const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent);
+
+  if (!paymentIntent || !paymentIntent.metadata.productId) return notFound();
 
   const product = await prisma.product.findUnique({
     where: { id: paymentIntent.metadata.productId },
   });
-  if (product == null) return notFound();
 
-  const isSuccess = paymentIntent.status === "succeeded";
+  if (!product) return notFound();
+
+  const isSuccess = redirect_status === "succeeded";
 
   return (
     <div>
       <h1 className="text-4xl font-bold">
-        {isSuccess ? "Success purchase!" : "Purchase failed"}
+        {isSuccess ? "Purchase Successful!" : "Purchase Failed"}
       </h1>
 
       <div className="mx-auto w-full max-w-5xl space-y-8">
@@ -44,18 +46,21 @@ export default async function SucessPage({
             )}
           </div>
           <div>
-            <div className="text-lg">{product.price}</div>
+            <div className="text-lg">${product.price}</div>
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <div className="line-clamp-3 text-muted-foreground">
               {product.description}
             </div>
-            <Button className="mt-4" size="lg" asChild>
+            <div className="mt-4">
               {isSuccess ? (
-                <a> </a>
+                <p className="text-green-500">Thank you for your purchase!</p>
               ) : (
-                <Link href={`/products/${product.id}/purchase`}>Try Again</Link>
+                <p className="text-red-500">
+                  Something went wrong. Please try again.
+                </p>
               )}
-            </Button>
+              <Button className="mt-4" size="lg" asChild></Button>
+            </div>
           </div>
         </div>
       </div>

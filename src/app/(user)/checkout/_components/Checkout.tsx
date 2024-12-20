@@ -1,6 +1,5 @@
 "use client";
 
-import { userOrderExists } from "@/app/(user)/actions/order";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,13 +21,15 @@ import Image from "next/image";
 import { FormEvent, useState } from "react";
 
 type CheckoutFormProps = {
-  product: {
+  cart: {
     id: string;
     image: string;
     name: string;
     price: number;
+    quantity: number;
     description: string;
-  };
+    alt: string;
+  }[];
   clientSecret: string;
 };
 
@@ -36,34 +37,53 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string,
 );
 
-export function CheckoutForm({ product, clientSecret }: CheckoutFormProps) {
+export function CheckoutForm({ cart = [], clientSecret }: CheckoutFormProps) {
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
   return (
     <div className="mx-auto w-full max-w-5xl space-y-8">
-      <div className="flex items-center gap-4">
-        <div className="relative aspect-video w-1/3 flex-shrink-0">
-          <Image
-            src={product.image}
-            fill
-            alt={product.name}
-            className="cover"
-          ></Image>
-        </div>
-        <div>
-          <div className="text-lg">{product.price}</div>
-          <h1 className="text-2xl font-bold">{product.name}</h1>
-          <div className="line-clamp-3 text-muted-foreground">
-            {product.description}
+      <div className="space-y-4">
+        <h1 className="text-2xl font-bold">Your Order</h1>
+        {cart.map((product) => (
+          <div key={product.id} className="flex items-center gap-4">
+            <div className="relative aspect-video w-1/3 flex-shrink-0">
+              <Image
+                src={product.image}
+                fill
+                alt={product.name}
+                className="cover rounded-md"
+              />
+            </div>
+            <div>
+              <div className="text-lg font-bold">{product.name}</div>
+              <div className="text-sm text-gray-500">{product.description}</div>
+              <div className="text-sm">Quantity: {product.quantity}</div>
+              <div className="text-sm font-semibold">
+                Price: ${product.price.toFixed(2)}
+              </div>
+              <div className="text-sm font-bold">
+                Subtotal: ${(product.price * product.quantity).toFixed(2)}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
+
+      <div className="mt-8 border-t pt-4 text-right">
+        <h2 className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</h2>
+      </div>
+
       <Elements options={{ clientSecret }} stripe={stripePromise}>
-        <Form price={product.price} productId={product.id} />
+        <Form cart={cart} />
       </Elements>
     </div>
   );
 }
 
-function Form({ price, productId }: { price: number; productId: string }) {
+function Form({ cart }: { cart: CheckoutFormProps["cart"] }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -75,14 +95,6 @@ function Form({ price, productId }: { price: number; productId: string }) {
     if (stripe == null || elements == null || email == null) return;
 
     setIsLoading(true);
-
-    const orderExists = await userOrderExists(email, productId);
-
-    if (orderExists) {
-      setErrorMessage("You have already purchased these products.");
-      setIsLoading(false);
-      return;
-    }
 
     stripe
       .confirmPayment({
@@ -111,7 +123,6 @@ function Form({ price, productId }: { price: number; productId: string }) {
           <CardTitle>Payment Information</CardTitle>
           {errorMessage && (
             <CardDescription className="text-destructive">
-              {" "}
               {errorMessage}
             </CardDescription>
           )}
@@ -127,9 +138,11 @@ function Form({ price, productId }: { price: number; productId: string }) {
         <CardFooter>
           <Button
             className="w-full"
-            disabled={stripe == null || elements == null}
+            disabled={stripe == null || elements == null || isLoading}
           >
-            {isLoading ? "Purchasing..." : `Purchase - $${price}`}
+            {isLoading
+              ? "Processing..."
+              : `Pay $${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}`}
           </Button>
         </CardFooter>
       </Card>

@@ -10,18 +10,30 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const response = await fetch("/api/payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart }),
-      });
+      try {
+        const response = await fetch("/api/payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cart }),
+        });
 
-      const data = await response.json();
-      setClientSecret(data.clientSecret);
+        if (!response.ok) {
+          throw new Error("Failed to fetch client secret");
+        }
+
+        const data = await response.json();
+        setClientSecret(data.clientSecret);
+      } catch (error) {
+        console.error("Error fetching client secret:", error);
+      }
     };
 
-    if (cart.length > 0) fetchClientSecret();
+    if (cart?.length > 0) fetchClientSecret();
   }, [cart]);
+
+  if (!cart || cart.length === 0) {
+    return <div>Your cart is empty. Add items to proceed to checkout.</div>;
+  }
 
   if (!clientSecret) {
     return <div>Loading...</div>;
@@ -34,16 +46,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <CheckoutForm
-        product={{
-          id: "cart",
-          image: "/cart-image.jpg",
-          name: "Your Cart",
-          price: totalAmount,
-          description: "Items in your shopping cart",
-        }}
-        clientSecret={clientSecret}
-      />
+      <h1 className="mb-4 text-2xl font-bold">Checkout</h1>
+      <p className="mb-6">Total: ${totalAmount.toFixed(2)}</p>
+      <CheckoutForm cart={cart} clientSecret={clientSecret} />
     </div>
   );
 }
