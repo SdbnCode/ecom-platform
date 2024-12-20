@@ -2,7 +2,7 @@
 
 A modern eCommerce web application built with **Next.js**. The app provides a user-friendly interface for browsing products, managing a shopping cart, and completing secure payments using **Stripe Checkout**.
 
-![alt text](https://imgur.com/a/CTvNsGH)
+![Athlete's Arena](https://imgur.com/a/CTvNsGH)
 
 ## Features
 
