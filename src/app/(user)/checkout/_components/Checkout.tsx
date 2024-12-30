@@ -52,7 +52,8 @@ export function CheckoutForm({ cart = [], clientSecret }: CheckoutFormProps) {
             <div className="relative aspect-video w-1/3 flex-shrink-0">
               <Image
                 src={product.image}
-                fill
+                width={150}
+                height={150}
                 alt={product.name}
                 className="cover rounded-md"
               />

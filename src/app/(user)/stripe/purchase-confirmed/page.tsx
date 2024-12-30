@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
 
@@ -9,23 +10,28 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { payment_intent: string; redirect_status?: string };
+  searchParams: { [key: string]: string };
 }) {
   const { payment_intent, redirect_status } = searchParams;
-
+  console.log(searchParams);
   if (!payment_intent) return notFound();
 
-  const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent);
+  const paymentIntent = await stripe.paymentIntents.retrieve(
+    searchParams.payment_intent,
+  );
 
-  if (!paymentIntent || !paymentIntent.metadata.productId) return notFound();
+  if (!paymentIntent.metadata.orderId) return notFound();
 
-  const product = await prisma.product.findUnique({
-    where: { id: paymentIntent.metadata.productId },
+  const order = await prisma.order.findUnique({
+    where: { id: paymentIntent.metadata.orderId },
+    include: { items: { include: { product: true } } },
   });
 
-  if (!product) return notFound();
+  if (!paymentIntent.metadata.orderId) return notFound();
 
   const isSuccess = redirect_status === "succeeded";
+
+  if (!order) return notFound();
 
   return (
     <div>
@@ -34,35 +40,34 @@ export default async function SuccessPage({
       </h1>
 
       <div className="mx-auto w-full max-w-5xl space-y-8">
-        <div className="flex items-center gap-4">
-          <div className="relative aspect-video w-1/3 flex-shrink-0">
-            {product.image && (
-              <Image
-                src={product.image}
-                fill
-                alt={product.name}
-                className="cover"
-              />
-            )}
+        {order?.items.map((item) => (
+          <div
+            key={item.id}
+            className="relative aspect-video w-1/3 flex-shrink-0"
+          >
+            {order.items.map((item) => (
+              <div key={item.id}>
+                {item.product.image && (
+                  <Image
+                    src={item.product.image}
+                    alt={item.product.name}
+                    width={150}
+                    height={150}
+                  />
+                )}
+                <h2>{item.product.name}</h2>
+                <p>Price: ${item.price / 100}</p>
+                <p>Quantity: {item.quantity}</p>
+              </div>
+            ))}
+
+            <Button className="mt-4" size="lg" asChild>
+              <Link href={isSuccess ? "/" : `/products/${order.id}/purchase`}>
+                {isSuccess ? "Go to Home" : "Try Again"}
+              </Link>
+            </Button>
           </div>
-          <div>
-            <div className="text-lg">${product.price}</div>
-            <h1 className="text-2xl font-bold">{product.name}</h1>
-            <div className="line-clamp-3 text-muted-foreground">
-              {product.description}
-            </div>
-            <div className="mt-4">
-              {isSuccess ? (
-                <p className="text-green-500">Thank you for your purchase!</p>
-              ) : (
-                <p className="text-red-500">
-                  Something went wrong. Please try again.
-                </p>
-              )}
-              <Button className="mt-4" size="lg" asChild></Button>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
