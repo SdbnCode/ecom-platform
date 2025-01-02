@@ -39,15 +39,8 @@ export default function CheckoutPage() {
     return <div>Loading...</div>;
   }
 
-  const totalAmount = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
-
   return (
     <div className="container mx-auto py-10">
-      <h1 className="mb-4 text-2xl font-bold">Checkout</h1>
-      <p className="mb-6">Total: ${totalAmount.toFixed(2)}</p>
       <CheckoutForm cart={cart} clientSecret={clientSecret} />
     </div>
   );

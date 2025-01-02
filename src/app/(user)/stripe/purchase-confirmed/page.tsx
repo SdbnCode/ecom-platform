@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
+import OrderDetails from "./_components/orderDetails";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -13,11 +13,10 @@ export default async function SuccessPage({
   searchParams: { [key: string]: string };
 }) {
   const { payment_intent, redirect_status } = searchParams;
+
   if (!payment_intent) return notFound();
 
-  const paymentIntent = await stripe.paymentIntents.retrieve(
-    searchParams.payment_intent,
-  );
+  const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent);
 
   if (!paymentIntent.metadata.orderId) return notFound();
 
@@ -30,43 +29,19 @@ export default async function SuccessPage({
 
   const isSuccess = redirect_status === "succeeded";
 
-  if (!order) return notFound();
-
   return (
-    <div>
+    <div className="mt-4 flex max-w-none flex-col justify-center">
       <h1 className="text-4xl font-bold">
         {isSuccess ? "Purchase Successful!" : "Purchase Failed"}
       </h1>
+      <OrderDetails order={order} isSuccess={isSuccess} />
 
-      <div className="mx-auto w-full max-w-5xl space-y-8">
-        {order?.items.map((item) => (
-          <div
-            key={item.id}
-            className="relative aspect-video w-1/3 flex-shrink-0"
-          >
-            {order.items.map((item) => (
-              <div key={item.id}>
-                {item.product.image && (
-                  <Image
-                    src={item.product.image}
-                    alt={item.product.name}
-                    width={150}
-                    height={150}
-                  />
-                )}
-                <h2>{item.product.name}</h2>
-                <p>Price: ${item.price / 100}</p>
-                <p>Quantity: {item.quantity}</p>
-              </div>
-            ))}
-
-            <Button className="mt-4" size="lg" asChild>
-              <Link href={isSuccess ? "/" : `/products/${order.id}/purchase`}>
-                {isSuccess ? "Go to Home" : "Try Again"}
-              </Link>
-            </Button>
-          </div>
-        ))}
+      <div className="mt-8">
+        <Button className="mt-4 self-center" size="lg" asChild>
+          <Link href={isSuccess ? "/" : `/products/${order.id}/purchase`}>
+            {isSuccess ? "Go to Home" : "Try Again"}
+          </Link>
+        </Button>
       </div>
     </div>
   );

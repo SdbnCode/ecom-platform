@@ -53,6 +53,7 @@ export function ProductCard({
             price,
             image,
             alt,
+            quantity: 1,
             available: true,
             createdAt: new Date(),
             updatedAt: new Date(),
