@@ -30,14 +30,15 @@ export default async function SuccessPage({
   const isSuccess = redirect_status === "succeeded";
 
   return (
-    <div className="mt-4 flex max-w-none flex-col justify-center">
-      <h1 className="text-4xl font-bold">
+    <div className="mt-4 flex max-w-none flex-col items-center justify-center">
+      <h1 className="text-center text-4xl font-bold">
         {isSuccess ? "Purchase Successful!" : "Purchase Failed"}
       </h1>
+
       <OrderDetails order={order} isSuccess={isSuccess} />
 
-      <div className="mt-8">
-        <Button className="mt-4 self-center" size="lg" asChild>
+      <div className="mt-8 flex justify-center">
+        <Button className="mt-4" size="lg" asChild>
           <Link href={isSuccess ? "/" : `/products/${order.id}/purchase`}>
             {isSuccess ? "Go to Home" : "Try Again"}
           </Link>

@@ -22,8 +22,13 @@ interface OrderDetailsProps {
 }
 
 export default function OrderDetails({ order, isSuccess }: OrderDetailsProps) {
+  const totalPrice = order.items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-8">
+    <div className="mx-auto mt-8 w-full max-w-5xl space-y-8">
       {order.items.map((item: OrderItem) => (
         <div key={item.id} className="flex items-center space-x-4">
           {item.product.image && (
@@ -37,21 +42,21 @@ export default function OrderDetails({ order, isSuccess }: OrderDetailsProps) {
           )}
           <div className="space-y-2">
             <h2 className="text-lg font-bold">{item.product.name}</h2>
-            <p>Unit Price: ${item.price}</p>
+            <p>Unit Price: ${item.price.toFixed(2)}</p>
             <p>Quantity: {item.quantity}</p>
-            <p>Total: ${item.price * item.quantity}</p>
+            <p>Total: ${(item.price * item.quantity).toFixed(2)}</p>
           </div>
         </div>
       ))}
-
-      <div className="mt-8">
-        <p
-          className={`text-xl font-semibold ${
+      <div className="mt-8 flex flex-col items-center">
+        <p className="text-xl font-semibold">Total: ${totalPrice.toFixed(2)}</p>
+        <div
+          className={`mt-4 text-xl font-semibold ${
             isSuccess ? "text-green-500" : "text-red-500"
           }`}
         >
           {isSuccess ? "Thank you for your purchase!" : "Purchase Failed."}
-        </p>
+        </div>
       </div>
     </div>
   );
