@@ -27,8 +27,9 @@ interface Product {
   name: string;
   price: number;
   description: string | null;
+  quantity: number;
   _count: {
-    orders: number;
+    orderItems: number;
   };
   available: boolean;
 }
@@ -82,7 +83,7 @@ export default async function ProductTable({
               <TableCell>{product.name}</TableCell>
               <TableCell>$ {product.price.toFixed(2)} CAD</TableCell>
               <TableCell>{product.description}</TableCell>
-              <TableCell>{product._count.orders}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
               <TableCell>
                 <span
                   className={`rounded-full px-2 py-1 text-white ${
@@ -115,7 +116,7 @@ export default async function ProductTable({
                     <DropdownMenuItem>
                       <DeleteNewProduct
                         id={product.id}
-                        disabled={product._count.orders > 0}
+                        disabled={product._count.orderItems > 0}
                       ></DeleteNewProduct>
                     </DropdownMenuItem>
                   </DropdownMenuContent>

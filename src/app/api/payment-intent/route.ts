@@ -16,9 +16,34 @@ export async function POST(req: Request) {
       0,
     );
 
+    const productIds = cart.map((item: { id: string }) => item.id);
+    const existingProducts = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+    });
+
+    const existingProductIds = new Set(existingProducts.map((p) => p.id));
+    const invalidItems = cart.filter(
+      (item: { id: string }) => !existingProductIds.has(item.id),
+    );
+
+    if (invalidItems.length > 0) {
+      console.error("Invalid product IDs:", invalidItems);
+      return NextResponse.json(
+        { error: "Some products in the cart are invalid." },
+        { status: 400 },
+      );
+    }
+
+    const guestUser = await prisma.user.create({
+      data: {
+        email: `${uuidv4()}@guest.com`,
+        password: "",
+      },
+    });
+
     const order = await prisma.order.create({
       data: {
-        userId: "anonymous",
+        userId: guestUser.id,
         status: "pending",
         total: amount,
         items: {

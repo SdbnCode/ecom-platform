@@ -14,6 +14,7 @@ const imageSchema = z
 const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   price: z.coerce.number().min(0, "Price must be greater than 0"),
+  quantity: z.coerce.number().min(0, "Quantity must be greater than 0"),
   description: z.string().min(1, "Description is required"),
   image: imageSchema.refine((file) => file.size > 0, {
     message: "Image is required",
@@ -51,6 +52,7 @@ export default async function addNewProduct(
       name: data.name,
       price: data.price,
       description: data.description,
+      quantity: data.quantity,
       image: imagePath,
       available: false,
     },
@@ -95,6 +97,7 @@ export async function updateProduct(
         name: data.name,
         price: data.price,
         description: data.description,
+        quantity: data.quantity,
         image: imagePath,
       },
     });

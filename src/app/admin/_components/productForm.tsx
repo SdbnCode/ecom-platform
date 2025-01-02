@@ -42,6 +42,18 @@ export default function ProductForm({ product }: { product: Product | null }) {
         />
         {error.price && <p className="text-destructive">{error.price}</p>}
       </div>
+      <div>
+        <Label htmlFor="quantity">Quantity</Label>
+        <Input
+          type="number"
+          placeholder="0"
+          id="quantity"
+          name="quantity"
+          defaultValue={product?.quantity || ""}
+          required
+        />
+        {error.quantity && <p className="text-destructive">{error.quantity}</p>}
+      </div>
 
       <div>
         <Label htmlFor="description">Description</Label>

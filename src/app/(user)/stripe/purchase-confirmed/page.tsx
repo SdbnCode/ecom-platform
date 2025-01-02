@@ -13,7 +13,6 @@ export default async function SuccessPage({
   searchParams: { [key: string]: string };
 }) {
   const { payment_intent, redirect_status } = searchParams;
-  console.log(searchParams);
   if (!payment_intent) return notFound();
 
   const paymentIntent = await stripe.paymentIntents.retrieve(
@@ -27,7 +26,7 @@ export default async function SuccessPage({
     include: { items: { include: { product: true } } },
   });
 
-  if (!paymentIntent.metadata.orderId) return notFound();
+  if (!order) return notFound();
 
   const isSuccess = redirect_status === "succeeded";
 

@@ -12,7 +12,8 @@ export default async function ProductPage() {
       description: true,
       image: true,
       available: true,
-      _count: { select: { orders: true } },
+      quantity: true,
+      _count: { select: { orderItems: true } },
     },
     orderBy: { name: "asc" },
   });
