@@ -28,6 +28,7 @@ interface Product {
   price: number;
   description: string | null;
   quantity: number;
+
   _count: {
     orderItems: number;
   };
