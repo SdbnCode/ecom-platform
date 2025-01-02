@@ -11,7 +11,7 @@ const NewestProducts = cache(
   () => {
     return prisma.product.findMany({
       where: { available: true },
-      orderBy: { orders: { _count: "desc" } },
+      orderBy: { orderItems: { _count: "desc" } },
       take: 6,
     });
   },
