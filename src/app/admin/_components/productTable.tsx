@@ -23,16 +23,13 @@ import { DeleteNewProduct, ToggleAvailableforPurchase } from "./dropDown";
 
 interface Product {
   id: string;
-  image: string | null;
   name: string;
   price: number;
   description: string | null;
-  quantity: number;
-
-  _count: {
-    orderItems: number;
-  };
+  image: string | null;
   available: boolean;
+  quantity: number;
+  _count: { orderItems: number };
 }
 
 export default async function ProductTable({
